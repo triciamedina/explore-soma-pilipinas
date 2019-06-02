@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset='UTF-8'>
-    <title>Explore SoMa Pilipinas</title>
+    <title>Explore SOMA Pilipinas</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet'>
@@ -10,7 +10,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
     <body>
-        <div id='map'></div>
+        <header>
+
+        </header>
+        <main>
+            <div id="intro">
+                <section>
+                    <h1>SOMA PILIPINAS</h1>
+                    <h2>Filipino Cultural Heritage District</h2>
+                    <p>Decades in the making, Filipinos have been in the South of Market for over a century. SOMA Pilipinas is a historic and living cultural heritage district with ongoing new generations of migrant workers and immigrant families forming the lifeblood of the South of Market.</p>
+                </section>
+                <section id="filter">
+                    <h3>EXPLORE</h3>
+                    <button class="js-filter-button" type="button" role="button" value="Business">Businesses</button>
+                    <button class="js-filter-button" type="button" role="button" value="Community Organization">Community Organizations</button>
+                    <button class="js-filter-button" type="button" role="button" value="Community Landmark">Community Landmarks</button>
+                    <button class="js-filter-button" type="button" role="button" value="Event">Events</button>
+                    <button class="js-filter-button" type="button" role="button" value="Reset">Reset</button>
+                </section>
+            </div>
+            <div id="map"></div>
+        </main>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="index.js"></script>
     </body>

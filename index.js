@@ -4,15 +4,17 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidHJpY2lhbWVkaW5hIiwiYSI6ImNqdm9uOGYweDIwYTU0M
 
 const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/triciamedina/cjw8micvr5so61cpi0wx38qnr',
+    style: 'mapbox://styles/triciamedina/cjw8micvr5so61cpi0wx38qnr?fresh=true',
     center: [-122.407, 37.783],
     zoom: 13.7
 });
 
-let zoom = new mapboxgl.NavigationControl({showCompass: false,});
-map.addControl(zoom, "bottom-right");
+function renderMap() {
+    let zoom = new mapboxgl.NavigationControl({showCompass: false,});
+    map.addControl(zoom, "bottom-right");
+}
 
-function handleMap() {
+function handleMapClick() {
     map.on("click", function(e) {
         let features = map.queryRenderedFeatures(e.point, {
             layers: ["soma-pilipinas"] 
@@ -30,9 +32,34 @@ function handleMap() {
             closeOnClick: true,
             })
             .setLngLat(feature.geometry.coordinates)
-            .setHTML(`<h3>${feature.properties.POI_NAME}</h3>`)
+            .setHTML(`<h3>${feature.properties.TITLE}</h3><p>${feature.properties.SHORT_DESCRIPTION}</p>`)
             .addTo(map);
+        
+        $("#filter").mousedown(function(){
+            popup.remove();
+        });
     })
+}
+
+function handleFilterClick() {
+
+    $(".js-filter-button").click(function() {
+
+        let selectedFilter = $(this).val();
+
+        if (selectedFilter == "Reset"){
+            map.setFilter("soma-pilipinas", ["has", "TYPE"]);
+        } else {
+            map.setFilter("soma-pilipinas", ["==", "TYPE", selectedFilter]);
+        };
+    });
+    
+}
+
+function handleMap() {
+    renderMap();
+    handleMapClick();
+    handleFilterClick();
 }
 
 $(handleMap);

@@ -1,6 +1,20 @@
+* {
+    box-sizing: border-box;
+}
+
 body { 
     margin: 0;
     padding: 0;
+}
+
+#intro {
+    position: absolute;
+    top:0;
+    bottom:0;
+    z-index: 1;
+    padding: 80px;
+    max-width: 450px;
+    background-color: rgba(255, 255, 255, 0.5)
 }
 
 #map { 
@@ -8,4 +22,41 @@ body {
     top:0;
     bottom:0;
     width:100%;
+    z-index: auto;
+}
+
+.mapboxgl-popup {
+    max-width: 300px;
+}
+
+#filter {
+    margin-top: 100px;
+}
+
+#filter, #filter > button {
+    display: block;
+}
+
+#filter > button {
+    margin: 20px 0px 20px 0px;
+}
+
+button[value="Business"] {
+    background-color: #008a87;
+    color: white;
+}
+
+button[value="Community Organization"] {
+    background-color: #a760a9;
+    color: white;
+}
+
+button[value="Community Landmark"] {
+    background-color: #fa6800;
+    color: white;
+}
+
+button[value="Event"] {
+    background-color: #edc473;
+    color: white;
 }
