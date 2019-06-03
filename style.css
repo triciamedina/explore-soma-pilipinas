@@ -36,6 +36,10 @@ body {
     z-index: auto;
 }
 
+.hidden {
+    display: none;
+}
+
 .mapboxgl-popup {
     max-width: 300px;
 }

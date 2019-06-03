@@ -48,37 +48,45 @@ function handleMapClick() {
 }
 
 function handleFilterClick() {
-
     $(".js-filter-button").click(function() {
-        $("#listings").empty();
         let selectedFilter = $(this).val();
-
-        if (selectedFilter == "Reset"){
-            map.setFilter("soma-pilipinas", ["has", "TYPE"]);
-        } else {
-            map.setFilter("soma-pilipinas", ["==", "TYPE", selectedFilter]);
-        };
-
-        //Query map based on selected filter
-        let filteredFeatures = map.queryRenderedFeatures({
-            layers: ["soma-pilipinas"],
-            filter: ["==", "TYPE", selectedFilter],
-        });
-
-        // Display a list of results in a popup sidebar
-        
-        buildFilterList(filteredFeatures);
+        updateList(selectedFilter);
+        updateMapView(selectedFilter);
     });
-    
 }
 
-function buildFilterList(data) {
+function updateList(selectedFilter) {
+    $("#listings").empty();
+    let filteredFeatures = map.querySourceFeatures("composite", {
+        sourceLayer: "soma-pilipinas", 
+        filter: ["==", "TYPE", selectedFilter],
+    })
     
+    displayResults(filteredFeatures);
+}
+
+function updateMapView(selectedFilter) {
+    if (selectedFilter == "Reset"){
+        $("#listings").addClass("hidden");
+        map.setFilter("soma-pilipinas", ["has", "TYPE"]);
+    } else {
+        $("#listings").removeClass("hidden");
+        map.setFilter("soma-pilipinas", ["==", "TYPE", selectedFilter]);
+    };
+}
+
+function displayResults(data) {
+    let newList = [];
     for (let i = 0; i < data.length; i++) {
-        let currentFeature = data[i];
-        let prop = currentFeature.properties;
-        $("#listings").append(`<h3>${prop.TITLE}</h3>`)
+        let filteredFeatures = data[i];
+        let item = filteredFeatures.properties;
+        newList.push(item.TITLE);
     }
+    console.log(newList.sort());
+
+    newList.forEach(function(element){
+        $("#listings").append(`<h3>${element}</h3>`)
+    })
 }
 
 function handleMap() {
