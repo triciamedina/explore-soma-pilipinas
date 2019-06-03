@@ -17,6 +17,17 @@ body {
     background-color: rgba(255, 255, 255, 0.5)
 }
 
+#listings {
+    position: absolute;
+    top:0;
+    right: 0;
+    bottom:0;
+    z-index: 1;
+    padding: 80px;
+    max-width: 450px;
+    background-color: rgba(255, 255, 255, 0.5)
+}
+
 #map { 
     position: absolute;
     top:0;
@@ -39,6 +50,7 @@ body {
 
 #filter > button {
     margin: 20px 0px 20px 0px;
+    cursor: pointer;
 }
 
 button[value="Business"] {
