@@ -9,11 +9,11 @@ body {
 
 #intro {
     position: absolute;
-    top:0;
-    bottom:0;
+    top: 50px;
+    left: 50px;
     z-index: 1;
-    padding: 80px;
-    max-width: 450px;
+    padding: 30px;
+    max-width: 400px;
     background-color: rgba(255, 255, 255, 0.5)
 }
 
@@ -23,9 +23,14 @@ body {
     right: 0;
     bottom:0;
     z-index: 1;
-    padding: 80px;
+    padding: 40px;
     max-width: 450px;
-    background-color: rgba(255, 255, 255, 0.5)
+    background-color: rgba(255, 255, 255, 0.5);
+    display: block;
+}
+
+#listings button {
+    display: block;
 }
 
 #map { 
@@ -34,6 +39,11 @@ body {
     bottom:0;
     width:100%;
     z-index: auto;
+}
+
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl-group {
+    margin-left: 80px;
+    margin-bottom: 40px;
 }
 
 .hidden {
@@ -45,7 +55,7 @@ body {
 }
 
 #filter {
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 #filter, #filter > button {
