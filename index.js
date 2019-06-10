@@ -129,7 +129,7 @@ function getEvents(url, options) {
         })
     .then(function(responseJson) {
         for (let i = 0; i < responseJson.events.length; i++){
-            $("#listings").append(
+            $("#sidebar").append(
                 `<h4>${responseJson.events[i].name.text}</h4>
                 <p>${responseJson.events[i].start.local}</p>
                 <p><a href = "${responseJson.events[i].url}" target = "_blank">Get tickets</a></p>

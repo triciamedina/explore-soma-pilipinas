@@ -213,3 +213,37 @@ main {
     display: none;
 }
 
+@media screen and (min-width: 1200px) {
+    #map { 
+        width:100%;
+        height: 85%;
+        position: absolute;
+    }
+
+    #map-filter {
+        position: absolute;
+        left: 18px;
+        bottom: 150px;
+        height: auto;
+        padding: 18px 0px 0px 0px;
+        background-color: white;
+        
+    }
+
+    #map-filter label {
+        display: block;
+    }
+
+    #listings {
+        width: 400px;
+        height: 90%;
+        max-height: 85.5%;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    #sidebar {
+        width: 400px;
+    }
+}
