@@ -13,13 +13,14 @@ mapboxgl.accessToken = "pk.eyJ1IjoidHJpY2lhbWVkaW5hIiwiYSI6ImNqdm9uOGYweDIwYTU0M
 const map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/triciamedina/cjw8micvr5so61cpi0wx38qnr?fresh=true",
-    center: [-122.407, 37.783],
-    zoom: 13.7
+    center: [-122.407, 37.785],
+    zoom: 12.7
 });
 
 function renderMap() {
     let zoom = new mapboxgl.NavigationControl({showCompass: false,});
     map.addControl(zoom, "bottom-left");
+    map.scrollZoom.disable();
     map.on("mouseenter", "soma-pilipinas", function(e) {
         map.getCanvas().style.cursor = 'pointer';
     });
@@ -40,8 +41,6 @@ function handleMapClick() {
 
         addPopup(feature);
 
-        $("#listings").empty();
-
         // if (isNaN(venueId)) {
         // } else {
         //     $("#listings").append(`<h4>Events</h4>`);
@@ -50,21 +49,18 @@ function handleMapClick() {
     })
 }
 
-function flyToMarker() {
+function openPopup() {
     $(".fly-to-button").click(function(){
         let itemTitle = $(this).val();
-
-        let features = map.queryRenderedFeatures({
-            layers: ["soma-pilipinas"],
+        let features = map.querySourceFeatures("composite", {
+            sourceLayer: "soma-pilipinas", 
             filter: ["==", "TITLE", itemTitle]
         })
-
         let feature = features[0];
 
-        // map.flyTo({
-        //     center: feature.geometry.coordinates,
-        //     zoom: 16
-        // })
+        map.flyTo({
+            center: feature.geometry.coordinates,
+        })
         addPopup(feature);
     });
 }
@@ -82,28 +78,25 @@ function addPopup(feature) {
         .setHTML(
         `<h3>${feature.properties.TITLE}</h3>
         <p>${feature.properties.SHORT_DESCRIPTION}</p>
-        <button class="js-details-button" type="button" role="button">Learn more</button>
+        <button class="js-open-sidebar-button" type="button" role="button">Learn more</button>
         `)
         .addTo(map);
     
-    openDetails(feature);
+    openSideBar(feature);
     
-    $("#map").mousedown(function() {
-        $("#listings").addClass("hidden")
-    })
-
     $("#filter").mousedown(function(){
         popup.remove();
     });
 }
 
-function openDetails(feature) {
-    $(".js-details-button").click(function() {
-        $("#listings")
+function openSideBar(feature) {
+    $(".js-open-sidebar-button").click(function() {
+        $("#sidebar")
             .empty()
             .removeClass("hidden")
-            .prepend(
-                `<h3>${feature.properties.TITLE}</h3>
+            .append(
+                `<input type="image" src="images/arrow.png" name="close" id="js-close" class="close-arrow" onclick="closeSideBar();"/>
+                <h3>${feature.properties.TITLE}</h3>
                 <p>${feature.properties.TYPE}</p>
                 <p>${feature.properties.SHORT_DESCRIPTION}</p>
                 <p><a href="${feature.properties.WEBSITE}" target="_blank">${feature.properties.WEBSITE}</a></p>
@@ -113,12 +106,16 @@ function openDetails(feature) {
                 
         if (isNaN(venueId)) {
         } else {
-            $("#listings").append(`<h4>Events</h4>`);
+            $("#sidebar").append(`<h4>Events</h4>`);
             getEvents(url, options);
             }
     });
 
-    
+    closeSideBar();
+}
+
+function closeSideBar() {
+        $("#sidebar").addClass("hidden");
 }
 
 function getEvents(url, options) {
@@ -156,7 +153,7 @@ function displayResults(filteredFeatures) {
         $("#listings").append(`<button class="fly-to-button" type="button" role="button" value="${element}">${element}</button>`)
     })
 
-    flyToMarker();
+    openPopup();
     
 }
 
@@ -171,9 +168,9 @@ function removeDupes(names) {
 }
 
 function updateMapView(selectedFilter) {
-    if (selectedFilter == "Reset"){
-        $("#listings").addClass("hidden");
-        map.setFilter("soma-pilipinas", ["has", "TYPE"]);
+    if (selectedFilter == "All"){
+        $("#listings").removeClass("hidden");
+        map.setFilter("soma-pilipinas");
     } else {
         $("#listings").removeClass("hidden");
         map.setFilter("soma-pilipinas", ["==", "TYPE", selectedFilter]);
@@ -182,26 +179,68 @@ function updateMapView(selectedFilter) {
 
 function handleFilterClick() {
     $(".js-filter-button").click(function() {
-        let selectedFilter = $(this).val();
-        updateList(selectedFilter);
-        updateMapView(selectedFilter);
+        let popUps = document.getElementsByClassName('mapboxgl-popup');
+        if (popUps[0]) popUps[0].remove();
+        
+        let center = map.getCenter();
+        let newLng = center.lng.toFixed(3);
+        let newLat = center.lat.toFixed(3);
+        let centerString = `lng: ${newLng}, lat: ${newLat}`
+
+        let zoom = map.getZoom();
+
+        if (centerString == "lng: -122.407, lat: 37.785" && zoom == 12.7) {
+            let selectedFilter = $("input.js-filter-button:checked").val();
+            updateList(selectedFilter);
+            updateMapView(selectedFilter);
+        } else {
+            map.flyTo({
+                center: [-122.407, 37.785],
+                zoom: 12.7
+            });
+    
+            map.on('zoomend', function () {
+                let selectedFilter = $("input.js-filter-button:checked").val();
+                updateList(selectedFilter);
+                updateMapView(selectedFilter);
+            });
+        }
     });
 }
 
 function updateList(selectedFilter) {
     $("#listings").empty();
-    let filteredFeatures = map.querySourceFeatures("composite", {
-        sourceLayer: "soma-pilipinas", 
-        filter: ["==", "TYPE", selectedFilter],
-    })
-    
-    displayResults(filteredFeatures);
+    if (selectedFilter == "All"){
+        let filteredFeatures = map.querySourceFeatures("composite", {
+            sourceLayer: "soma-pilipinas", 
+            filter: ["has", "TYPE"],
+        })
+        displayResults(filteredFeatures);
+    } else {
+        let filteredFeatures = map.querySourceFeatures("composite", {
+            sourceLayer: "soma-pilipinas", 
+                filter: ["==", "TYPE", selectedFilter],
+            })
+        displayResults(filteredFeatures);
+        };
+}
+
+function buildDefaultList() {
+    map.on('load', function () {
+        let defaultFilter = map.querySourceFeatures("composite", {
+            sourceLayer: "soma-pilipinas", 
+            filter: ["has", "TYPE"],
+        });
+        displayResults(defaultFilter);
+})
+
 }
 
 function handleMap() {
     renderMap();
     handleMapClick();
     handleFilterClick();
+    buildDefaultList();
 }
 
 $(handleMap);

@@ -8,31 +8,56 @@
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet'>
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:700|Barlow:400,700|Space+Mono:400i&display=swap" rel="stylesheet">  
 </head>
     <body>
-        <header>
-
+        <header role="banner">
+            <div id="intro-container">
+                <img src="images/logo.png" width="128px" />
+                <h1>WELCOME TO <br>SOMA PILIPINAS</h1>
+                <p>The <a href="https://www.somapilipinas.org/" target="_blank">SOMA Pilipinas Filipino Cultural Heritage District</a> is a celebration of the love, pride, and people power of generations of Filipinos in San Francisco and beyond.</p>
+                <p class="cta">Explore the map</p>
+            </div>
         </header>
         <main>
-            <div id="intro">
-                <section>
-                    <h1>SOMA PILIPINAS</h1>
-                    <h2>Filipino Cultural Heritage District</h2>
-                    <p>The SOMA Pilipinas Filipino Cultural Heritage District is a celebration of the love, pride, and people power of generations of Filipinos in San Francisco and beyond.</p>
-                </section>
-                <section id="filter">
-                    <h3>EXPLORE</h3>
-                    <button class="js-filter-button" type="button" role="button" value="Business">Businesses</button>
-                    <button class="js-filter-button" type="button" role="button" value="Community Organization">Community Organizations</button>
-                    <button class="js-filter-button" type="button" role="button" value="Community Landmark">Community Landmarks</button>
-                    <button class="js-filter-button" type="button" role="button" value="Event">Events</button>
-                    <button class="js-filter-button" type="button" role="button" value="Reset">Reset</button>
-                </section>
-            </div>
-            <div id="listings" class="hidden"></div>
+            <nav>
+                <img src="images/logo.png" width="65px" />
+            </nav>
             <div id="map"></div>
+            <div id="map-filter">
+                <h2>EXPLORE</h2>
+                <div class="horizontal-scroll">
+                    <form>
+                        <fieldset>
+                            <label for="all" id="filter-all">
+                                <input class="js-filter-button" type="radio" name="filter" id="all" value="All" checked>
+                                <span>All</span>
+                             </label>
+                            <label for="business" id="filter-business">
+                                <input class="js-filter-button" type="radio" name="filter" id="business" value="Business">
+                                <span>Businesses</span>
+                            </label>
+                            <label for="community-organization" id="filter-community-organization">
+                                <input class="js-filter-button" type="radio" name="filter" id="community-organization" value="Community Organization">
+                                <span>Community Organizations</span>
+                            </label>
+                            <label for="community-landmark" id="filter-community-landmark">
+                                <input class="js-filter-button" type="radio" name="filter" id="community-landmark" value="Community Landmark">
+                                <span>Community Landmarks</span>
+                            </label>
+                            <label for="event" id="filter-events">
+                                <input class="js-filter-button" type="radio" name="filter" id="event" value="Event">
+                                <span>Events</span>
+                            </label>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div id="listings"></div>
+            <div id="sidebar" class="hidden">
+            </div>
         </main>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="index.js"></script>
     </body>
 </html>
