@@ -10,6 +10,7 @@ const options = {
 
 mapboxgl.accessToken = "pk.eyJ1IjoidHJpY2lhbWVkaW5hIiwiYSI6ImNqdm9uOGYweDIwYTU0M29qbnQ4dnA1ZHEifQ.33vfmiE7P9ufCrkjUmNoxQ";
 
+
 const map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/triciamedina/cjw8micvr5so61cpi0wx38qnr?fresh=true",
@@ -27,6 +28,9 @@ function renderMap() {
     map.on("mouseleave", "soma-pilipinas", function() {
         map.getCanvas().style.cursor = "";
     });
+    if ($(window).width() >= 1200) {
+        map.setZoom(13.5)
+    };
 }
 
 function handleMapClick() {
@@ -40,12 +44,6 @@ function handleMapClick() {
         let feature = features[0];
 
         addPopup(feature);
-
-        // if (isNaN(venueId)) {
-        // } else {
-        //     $("#listings").append(`<h4>Events</h4>`);
-        //     getEvents(url, options);
-        // }
     })
 }
 
@@ -77,7 +75,6 @@ function addPopup(feature) {
         .setLngLat(feature.geometry.coordinates)
         .setHTML(
         `<h3>${feature.properties.TITLE}</h3>
-        <p>${feature.properties.SHORT_DESCRIPTION}</p>
         <button class="js-open-sidebar-button" type="button" role="button">Learn more</button>
         `)
         .addTo(map);
@@ -108,7 +105,12 @@ function openSideBar(feature) {
         } else {
             $("#sidebar").append(`<h4>Events</h4>`);
             getEvents(url, options);
-            }
+            };
+
+        if ($(window).width() < 1200) {
+            $("#map-filter").addClass("hidden");
+        }
+        $("#listings").addClass("hidden");
     });
 
     closeSideBar();
@@ -116,6 +118,9 @@ function openSideBar(feature) {
 
 function closeSideBar() {
         $("#sidebar").addClass("hidden");
+        $("#map-filter").removeClass("hidden");
+        $("#listings").removeClass("hidden");
+
 }
 
 function getEvents(url, options) {
@@ -179,6 +184,7 @@ function updateMapView(selectedFilter) {
 
 function handleFilterClick() {
     $(".js-filter-button").click(function() {
+
         let popUps = document.getElementsByClassName('mapboxgl-popup');
         if (popUps[0]) popUps[0].remove();
         
@@ -205,6 +211,8 @@ function handleFilterClick() {
                 updateMapView(selectedFilter);
             });
         }
+
+        $("#listings").scrollLeft(0).scrollTop(0);
     });
 }
 
@@ -232,8 +240,7 @@ function buildDefaultList() {
             filter: ["has", "TYPE"],
         });
         displayResults(defaultFilter);
-})
-
+    })
 }
 
 function handleMap() {
