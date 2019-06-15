@@ -44,7 +44,7 @@ function addPopup(feature) {
         })
         .setLngLat(feature.geometry.coordinates)
         .setHTML(
-        `<h3>${feature.properties.TITLE}</h3>
+        `<h2>${feature.properties.TITLE}</h2>
         <button class="js-open-sidebar-button" type="button" role="button">Learn more</button>
         `)
         .addTo(map);
@@ -113,7 +113,7 @@ function openSideBar(feature) {
             .removeClass("hidden")
             .append(
                 `<input type="image" src="images/arrow.png" name="close" alt="close" id="js-close" class="close-arrow" onclick="closeSideBar();"/>
-                <h3>${feature.properties.TITLE}</h3>
+                <h2>${feature.properties.TITLE}</h2>
                 <p>${feature.properties.TYPE}</p>
                 <p>${feature.properties.SHORT_DESCRIPTION}</p>
                 <p><a href="${feature.properties.WEBSITE}" target="_blank">${feature.properties.WEBSITE}</a></p>
