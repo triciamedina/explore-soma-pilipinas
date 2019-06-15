@@ -101,6 +101,10 @@ main {
     color: white;
 }
 
+.mapboxgl-popup-close-button {
+    color: white;
+}
+
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
 .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
 .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
