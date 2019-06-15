@@ -128,6 +128,7 @@ function openSideBar(feature) {
             };
 
         if ($(window).width() < 1200) {
+            $("#map").addClass("hidden");
             $("#map-filter").addClass("hidden");
         }
         $("#listings").addClass("hidden");
@@ -140,6 +141,7 @@ function closeSideBar() {
         $("#sidebar").addClass("hidden");
         $("#map-filter").removeClass("hidden");
         $("#listings").removeClass("hidden");
+        $("#map").removeClass("hidden");
 
 }
 
