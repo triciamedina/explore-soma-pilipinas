@@ -3,9 +3,10 @@
 <head>
     <meta charset='UTF-8'>
     <title>Explore SOMA Pilipinas</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1'>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="images/favicon.ico">
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:700|Barlow:400,700|Space+Mono:400i&display=swap" rel="stylesheet">  
@@ -13,40 +14,44 @@
     <body>
         <header role="banner">
             <div id="intro-container">
-                <img src="images/logo.png" width="128px" />
+                <img src="images/logo.png" width="128px" alt="SOMA PILIPINAS"/>
                 <h1>WELCOME TO <br>SOMA PILIPINAS</h1>
                 <p>The <a href="https://www.somapilipinas.org/" target="_blank">SOMA Pilipinas Filipino Cultural Heritage District</a> is a celebration of the love, pride, and people power of generations of Filipinos in San Francisco and beyond.</p>
-                <a href="#nav" class="cta">Explore the map</a>
+                <a href="#nav" class="cta"><span class="black-bg">Explore the map</span></a>
             </div>
         </header>
         <main>
             <nav id="nav">
-                <img src="images/logo.png" width="65px" />
+                <img src="images/logo.png" width="65px" alt="SOMA PILIPINAS"/>
             </nav>
             <div id="map"></div>
             <div id="map-filter">
-                <h2>Explore</h2>
                 <div class="horizontal-scroll">
-                    <label for="all" id="filter-all">
-                        <input class="js-filter-button" type="radio" name="filter" id="all" value="All" checked>
-                        <span>All</span>
-                    </label>
-                    <label for="business" id="filter-business">
-                        <input class="js-filter-button" type="radio" name="filter" id="business" value="Business">
-                        <span>Businesses</span>
-                    </label>
-                    <label for="community-organization" id="filter-community-organization">
-                        <input class="js-filter-button" type="radio" name="filter" id="community-organization" value="Community Organization">
-                        <span>Community Organizations</span>
-                        </label>
-                    <label for="community-landmark" id="filter-community-landmark">
-                        <input class="js-filter-button" type="radio" name="filter" id="community-landmark" value="Community Landmark">
-                        <span>Community Landmarks</span>
-                    </label>
-                    <label for="event" id="filter-events">
-                        <input class="js-filter-button" type="radio" name="filter" id="event" value="Event">
-                        <span>Events</span>
-                    </label>
+                    <form>
+                        <fieldset>
+                            <legend><h2>Explore</h2></legend>
+                            <label for="all" id="filter-all">
+                                <input class="js-filter-button" type="radio" name="filter" id="all" value="All" checked>
+                                <span>All</span>
+                            </label>
+                                <label for="business" id="filter-business">
+                                <input class="js-filter-button" type="radio" name="filter" id="business" value="Business">
+                                <span>Businesses</span>
+                            </label>
+                            <label for="community-organization" id="filter-community-organization">
+                                <input class="js-filter-button" type="radio" name="filter" id="community-organization" value="Community Organization">
+                                <span>Community Organizations</span>
+                            </label>
+                            <label for="community-landmark" id="filter-community-landmark">
+                                <input class="js-filter-button" type="radio" name="filter" id="community-landmark" value="Community Landmark">
+                                <span>Community Landmarks</span>
+                            </label>
+                            <label for="event" id="filter-events">
+                                <input class="js-filter-button" type="radio" name="filter" id="event" value="Event">
+                                <span>Events</span>
+                            </label>
+                        </fieldset>        
+                    </form>
                 </div>
             </div>
             <div id="listings"></div>
