@@ -269,6 +269,7 @@ main {
 
 #sidebar .close-arrow {
     width: 45px;
+    cursor: pointer;
 }
 
 #sidebar a, #sidebar a:visited {
