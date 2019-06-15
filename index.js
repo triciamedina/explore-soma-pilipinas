@@ -123,7 +123,7 @@ function openSideBar(feature) {
                 
         if (isNaN(venueId)) {
         } else {
-            $("#sidebar").append(`<h4>Events</h4>`);
+            $("#sidebar").append(`<h3>Events</h3>`);
             getEvents(url, options);
             };
 
