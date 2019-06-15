@@ -112,7 +112,7 @@ function openSideBar(feature) {
             .empty()
             .removeClass("hidden")
             .append(
-                `<input type="image" src="images/arrow.png" name="close" id="js-close" class="close-arrow" onclick="closeSideBar();"/>
+                `<input type="image" src="images/arrow.png" name="close" alt="close" id="js-close" class="close-arrow" onclick="closeSideBar();"/>
                 <h3>${feature.properties.TITLE}</h3>
                 <p>${feature.properties.TYPE}</p>
                 <p>${feature.properties.SHORT_DESCRIPTION}</p>

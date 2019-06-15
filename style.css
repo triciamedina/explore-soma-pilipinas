@@ -270,6 +270,10 @@ main {
     width: 45px;
 }
 
+#sidebar a, #sidebar a:visited {
+    color: white;
+}
+
 .hidden {
     display: none !important;
 }
