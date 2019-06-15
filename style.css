@@ -5,10 +5,10 @@
 }
 
 body { 
-    overflow-x: scroll;
     margin: 0;
     padding: 0;
     font-family: 'Barlow', sans-serif;
+    overflow-x: scroll;
 }
 
 header {
@@ -74,7 +74,7 @@ nav img {
 }
 
 main {
-    width: 100%;
+    max-width: 100vw;
     height: 100vh;
     position: relative;
     display: grid;
@@ -83,6 +83,7 @@ main {
 
 #map { 
     width:100%;
+    max-width: 100vw;
     position: relative;
 }
 
@@ -124,6 +125,7 @@ main {
 
 #map-filter {
     height: auto;
+    max-width: 100vw;
     padding: 0px 0px 0px 0px;
     display: grid;
     background-color: black;
@@ -151,6 +153,7 @@ main {
     overflow-y: hidden;
     white-space: nowrap;
     width: 100%;
+    max-width: 100vw;
     padding: 20px 10px 20px 18px;
 }
 
@@ -227,6 +230,7 @@ main {
 
 #listings {
     width: 100%;
+    max-width: 100vw;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;

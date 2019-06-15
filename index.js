@@ -33,36 +33,6 @@ function renderMap() {
     };
 }
 
-function handleMapClick() {
-    map.on("click", function(e) {
-        let features = map.queryRenderedFeatures(e.point, {
-            layers: ["soma-pilipinas"] 
-        });
-        if (!features.length) {
-            return;
-        }
-        let feature = features[0];
-
-        addPopup(feature);
-    })
-}
-
-function openPopup() {
-    $(".fly-to-button").click(function(){
-        let itemTitle = $(this).val();
-        let features = map.querySourceFeatures("composite", {
-            sourceLayer: "soma-pilipinas", 
-            filter: ["==", "TITLE", itemTitle]
-        })
-        let feature = features[0];
-
-        map.flyTo({
-            center: feature.geometry.coordinates,
-        })
-        addPopup(feature);
-    });
-}
-
 function addPopup(feature) {
     let popUps = document.getElementsByClassName('mapboxgl-popup');
     if (popUps[0]) popUps[0].remove();
@@ -84,6 +54,56 @@ function addPopup(feature) {
     $("#filter").mousedown(function(){
         popup.remove();
     });
+}
+
+function openPopup() {
+    $(".fly-to-button").click(function(){
+        let itemTitle = $(this).val();
+        let features = map.querySourceFeatures("composite", {
+            sourceLayer: "soma-pilipinas", 
+            filter: ["==", "TITLE", itemTitle]
+        })
+        let feature = features[0];
+
+        map.flyTo({
+            center: feature.geometry.coordinates,
+        })
+        addPopup(feature);
+    });
+}
+
+function handleMapClick() {
+    map.on("click", function(e) {
+        let features = map.queryRenderedFeatures(e.point, {
+            layers: ["soma-pilipinas"] 
+        });
+        if (!features.length) {
+            return;
+        }
+        let feature = features[0];
+
+        addPopup(feature);
+    })
+}
+
+function getEvents(url, options) {
+    fetch(url, options)
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+            
+        }
+            throw new Error(response.error_description);
+        })
+    .then(function(responseJson) {
+        for (let i = 0; i < responseJson.events.length; i++){
+            $("#sidebar").append(
+                `<h4>${responseJson.events[i].name.text}</h4>
+                <p>${responseJson.events[i].start.local}</p>
+                <p><a href = "${responseJson.events[i].url}" target = "_blank">Get tickets</a></p>
+                `)
+            } 
+         })
 }
 
 function openSideBar(feature) {
@@ -123,65 +143,6 @@ function closeSideBar() {
 
 }
 
-function getEvents(url, options) {
-    fetch(url, options)
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-            
-        }
-            throw new Error(response.error_description);
-        })
-    .then(function(responseJson) {
-        for (let i = 0; i < responseJson.events.length; i++){
-            $("#sidebar").append(
-                `<h4>${responseJson.events[i].name.text}</h4>
-                <p>${responseJson.events[i].start.local}</p>
-                <p><a href = "${responseJson.events[i].url}" target = "_blank">Get tickets</a></p>
-                `)
-            } 
-         })
-}
-    
-function displayResults(filteredFeatures) {
-    let list = [];
-    for (let i = 0; i < filteredFeatures.length; i++) {
-        let filteredList = filteredFeatures[i];
-        let item = filteredList.properties;
-        let itemTitle = item.TITLE;
-        list.push(itemTitle);
-    }
-    
-    let newList = removeDupes(list);
-
-    newList.sort().forEach(function(element){
-        $("#listings").append(`<button class="fly-to-button" type="button" role="button" value="${element}">${element}</button>`)
-    })
-
-    openPopup();
-    
-}
-
-function removeDupes(names) {
-    let unique = {};
-    names.forEach(function(i) {
-        if(!unique[i]) {
-            unique[i] = true;
-        }
-    });
-  return Object.keys(unique);
-}
-
-function updateMapView(selectedFilter) {
-    if (selectedFilter == "All"){
-        $("#listings").removeClass("hidden");
-        map.setFilter("soma-pilipinas");
-    } else {
-        $("#listings").removeClass("hidden");
-        map.setFilter("soma-pilipinas", ["==", "TYPE", selectedFilter]);
-    };
-}
-
 function handleFilterClick() {
     $(".js-filter-button").click(function() {
 
@@ -216,6 +177,16 @@ function handleFilterClick() {
     });
 }
 
+function updateMapView(selectedFilter) {
+    if (selectedFilter == "All"){
+        $("#listings").removeClass("hidden");
+        map.setFilter("soma-pilipinas");
+    } else {
+        $("#listings").removeClass("hidden");
+        map.setFilter("soma-pilipinas", ["==", "TYPE", selectedFilter]);
+    };
+}
+
 function updateList(selectedFilter) {
     $("#listings").empty();
     if (selectedFilter == "All"){
@@ -231,6 +202,34 @@ function updateList(selectedFilter) {
             })
         displayResults(filteredFeatures);
         };
+}
+
+function displayResults(filteredFeatures) {
+    let list = [];
+    for (let i = 0; i < filteredFeatures.length; i++) {
+        let filteredList = filteredFeatures[i];
+        let item = filteredList.properties;
+        let itemTitle = item.TITLE;
+        list.push(itemTitle);
+    }
+    
+    let newList = removeDupes(list);
+
+    newList.sort().forEach(function(element){
+        $("#listings").append(`<button class="fly-to-button" type="button" role="button" value="${element}">${element}</button>`)
+    })
+
+    openPopup();
+}
+
+function removeDupes(names) {
+    let unique = {};
+    names.forEach(function(i) {
+        if(!unique[i]) {
+            unique[i] = true;
+        }
+    });
+  return Object.keys(unique);
 }
 
 function buildDefaultList() {
