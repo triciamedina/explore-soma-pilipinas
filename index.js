@@ -14,7 +14,7 @@ mapboxgl.accessToken = "pk.eyJ1IjoidHJpY2lhbWVkaW5hIiwiYSI6ImNqdm9uOGYweDIwYTU0M
 const map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/triciamedina/cjw8micvr5so61cpi0wx38qnr?fresh=true",
-    center: [-122.407, 37.785],
+    center: [-122.407, 37.788],
     zoom: 12.7
 });
 
@@ -158,13 +158,13 @@ function handleFilterClick() {
 
         let zoom = map.getZoom();
 
-        if (centerString == "lng: -122.407, lat: 37.785" && zoom == 12.7) {
+        if (centerString == "lng: -122.407, lat: 37.788" && zoom == 12.7) {
             let selectedFilter = $("input.js-filter-button:checked").val();
             updateList(selectedFilter);
             updateMapView(selectedFilter);
         } else {
             map.flyTo({
-                center: [-122.407, 37.785],
+                center: [-122.407, 37.788],
                 zoom: 12.7
             });
     
@@ -244,11 +244,42 @@ function buildDefaultList() {
     })
 }
 
+function handleStickyNav() {
+    let navOffset = $("#nav").offset().top;
+
+    $(window).scroll(function(){
+
+        let scroll = $(window).scrollTop();
+        if (scroll >= navOffset) {
+            $("#nav").addClass("sticky");
+        } 
+        if (scroll < navOffset) {
+            $("#nav").removeClass("sticky");}
+        });
+}
+
+function handleSlidingDrawer() {
+    // $(window).scroll(function() {   
+    //     if($(window).scrollTop() + $(window).height() == $(document).height()) {
+    //         alert("bottom!");
+    //     }
+    //  });
+
+    // $("#listings").scroll(function(){
+    //     let st = $(this).scrollTop();
+    //     let height = $("#listings").height();
+    //     $("#listings").height($("#listings").height()+st);
+    //     console.log(height);
+    //  });
+}
+
 function handleMap() {
     renderMap();
     handleMapClick();
     handleFilterClick();
     buildDefaultList();
+    handleStickyNav();
+    handleSlidingDrawer();
 }
 
 $(handleMap);

@@ -26,15 +26,15 @@
             </nav>
             <div id="map"></div>
             <div id="map-filter">
-                <div class="horizontal-scroll">
-                    <form>
-                        <fieldset>
-                            <legend><h2>Explore</h2></legend>
+                <form>
+                    <fieldset>
+                        <legend><h2>Filter</h2></legend>
+                        <div id="filter-wrapper">
                             <label for="all" id="filter-all">
                                 <input class="js-filter-button" type="radio" name="filter" id="all" value="All" checked>
                                 <span>All</span>
                             </label>
-                                <label for="business" id="filter-business">
+                            <label for="business" id="filter-business">
                                 <input class="js-filter-button" type="radio" name="filter" id="business" value="Business">
                                 <span>Businesses</span>
                             </label>
@@ -50,9 +50,9 @@
                                 <input class="js-filter-button" type="radio" name="filter" id="event" value="Event">
                                 <span>Events</span>
                             </label>
-                        </fieldset>        
-                    </form>
-                </div>
+                        </div>
+                    </fieldset>        
+                 </form>
             </div>
             <div id="listings"></div>
             <div id="sidebar" class="hidden">
