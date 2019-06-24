@@ -431,7 +431,16 @@ nav .logo {
     display: none !important;
 }
 
+.mobile-hidden {
+    display: none !important;
+}
+
 @media screen and (min-width: 1200px) {
+
+    .desktop-hidden {
+        display: none !important;
+    }
+
     .mobile-open-list {
         display: none;
     }
@@ -502,6 +511,11 @@ nav .logo {
 
     .map-filter-tall {
         top: auto !important;
+    }
+
+    .mobile-map-tall {
+        height: auto !important;
+        max-height: auto !important;
     }
 
     #map { 

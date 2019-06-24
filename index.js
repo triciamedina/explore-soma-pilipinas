@@ -65,11 +65,11 @@ function selectFromList() {
 
             // Reposition map filter and show listings
             $("#map-filter").removeClass("map-filter-tall");
-            $(".listings").addClass("hidden").removeClass("map-filter-tall");
+            $(".listings").addClass("mobile-hidden").removeClass("map-filter-tall");
 
             // Change show list button to close button
-            $(".mobile-open-list").removeClass("hidden");
-            $(".mobile-close-list").addClass("hidden");
+            $(".mobile-open-list").removeClass("mobile-hidden");
+            $(".mobile-close-list").addClass("mobile-hidden");
         }
         
         let itemTitle = $(this).val();
@@ -146,7 +146,7 @@ function openSideBar(feature) {
             };
 
         if ($(window).width() >= 1200) {
-            $(".close-list").addClass("hidden");
+            $(".close-list").addClass("desktop-hidden");
         }
     });
 
@@ -155,12 +155,12 @@ function openSideBar(feature) {
 
 function closeSideBar() {
         $("#sidebar").addClass("hidden");
-        $("#map-filter").removeClass("hidden");
+        // $("#map-filter").removeClass("hidden");
         // $(".listings").Class("hidden");
         // $("#map").removeClass("hidden");
         
         if ($(window).width() >= 1200) {
-            $(".close-list").removeClass("hidden");
+            $(".close-list").removeClass("desktop-hidden");
         }
 }
 
@@ -224,22 +224,22 @@ function showList() {
 
         // Reposition map filter and show listings
         $("#map-filter").addClass("map-filter-tall");
-        $(".listings").removeClass("hidden").addClass("map-filter-tall");
+        $(".listings").removeClass("mobile-hidden").addClass("map-filter-tall");
         handleStickyFilter();
 
         // Change show list button to close button
-        $(".mobile-open-list").addClass("hidden");
-        $(".mobile-close-list").removeClass("hidden");
+        $(".mobile-open-list").addClass("mobile-hidden");
+        $(".mobile-close-list").removeClass("mobile-hidden");
         closeList();
     });
 
     // Desktop
     $(".open-list").click(function() {
-        $(".listings").removeClass("hidden");
+        $(".listings").removeClass("desktop-hidden");
         $("#map").addClass("map-expanded");
         
-        $(".open-list").addClass("hidden");
-        $(".close-list").removeClass("hidden");
+        $(".open-list").addClass("desktop-hidden");
+        $(".close-list").removeClass("desktop-hidden");
 
         // Delays transitions to execute after display property updates
         listingsOpenTransition();
@@ -271,11 +271,11 @@ function closeList() {
 
         // Reposition map filter and show listings
         $("#map-filter").removeClass("map-filter-tall");
-        $(".listings").addClass("hidden").removeClass("map-filter-tall");
+        $(".listings").addClass("mobile-hidden").removeClass("map-filter-tall");
 
         // Change show list button to close button
-        $(".mobile-open-list").removeClass("hidden");
-        $(".mobile-close-list").addClass("hidden");
+        $(".mobile-open-list").removeClass("mobile-hidden");
+        $(".mobile-close-list").addClass("mobile-hidden");
     });
 
     $(".close-list").click(function() {
@@ -283,8 +283,8 @@ function closeList() {
         $("#map").removeClass("map-expanded");
         $("#nav").removeClass("nav-expanded");
 
-        $(".open-list").removeClass("hidden");
-        $(".close-list").addClass("hidden");
+        $(".open-list").removeClass("desktop-hidden");
+        $(".close-list").addClass("desktop-hidden");
 
         listingsCloseTransition();
     });
@@ -294,7 +294,7 @@ function closeList() {
 
 function listingsCloseTransition() {
     setTimeout(function(){ 
-        $(".listings").addClass("hidden");
+        $(".listings").addClass("desktop-hidden");
         $(".open-list").removeClass("fade-out");
         $(".close-list").addClass("fade-out");}, 500);
 
@@ -400,30 +400,30 @@ function handleStickyFilter() {
 function handleWindowResize() {
     $(window).resize(function(){
         handleStickyFilter();
-        // removeStyles();
-        map.resize();
+        removeStyles();
+        setTimeout(function(){ 
+            map.resize();}, 500);
     });
 }
 
 function removeStyles() {
-    $("#map").attr("class", "");
-    $(".listings").removeClass("hidden");
+    // $("#map").attr("class", "");
+    // $(".listings").removeClass("hidden");
     // $(".listings").attr("class", "listings hidden");
-    $(".open-list").addClass("hidden");
-    $(".close-list").removeClass("hidden fade-out");
+    // $(".open-list").addClass("hidden");
+    // $(".close-list").removeClass("hidden fade-out");
     
 
     if ($(window).width() >= 1200) {
-        $("#map").addClass("map-expanded");
-        $(".listings").addClass("expanded");
-        $("#nav").addClass("nav-expanded");
+        $(".listings").removeClass("mobile-hidden");
+        $("#map").removeClass("mobile-map-tall");
     }
 
     if ($(window).width() < 1200) {
         $("#map-filter").addClass("map-filter-tall");
-        $(".listings").addClass("map-filter-tall").removeClass("hidden expanded");
-        $(".mobile-open-list").addClass("hidden");
-        $(".mobile-close-list").removeClass("hidden");
+        $(".listings").addClass("map-filter-tall");
+        $(".mobile-open-list").addClass("mobile-hidden");
+        $(".mobile-close-list").removeClass("mobile-hidden");
 
     }
 }
