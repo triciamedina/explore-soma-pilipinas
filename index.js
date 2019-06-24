@@ -10,17 +10,17 @@ const options = {
 
 mapboxgl.accessToken = "pk.eyJ1IjoidHJpY2lhbWVkaW5hIiwiYSI6ImNqdm9uOGYweDIwYTU0M29qbnQ4dnA1ZHEifQ.33vfmiE7P9ufCrkjUmNoxQ";
 
-
 const map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/triciamedina/cjw8micvr5so61cpi0wx38qnr?fresh=true",
-    center: [-122.407, 37.788],
-    zoom: 12.7
+    center: [-122.406, 37.785],
+    zoom: 13.2,
+    trackResize: true,
 });
 
 function renderMap() {
     let zoom = new mapboxgl.NavigationControl({showCompass: false,});
-    map.addControl(zoom, "bottom-left");
+    map.addControl(zoom, "bottom-right");
     map.scrollZoom.disable();
     map.on("mouseenter", "soma-pilipinas", function(e) {
         map.getCanvas().style.cursor = 'pointer';
@@ -28,9 +28,6 @@ function renderMap() {
     map.on("mouseleave", "soma-pilipinas", function() {
         map.getCanvas().style.cursor = "";
     });
-    if ($(window).width() >= 1200) {
-        map.setZoom(13.5)
-    };
 }
 
 function addPopup(feature) {
@@ -56,8 +53,25 @@ function addPopup(feature) {
     });
 }
 
-function openPopup() {
+function selectFromList() {
     $(".fly-to-button").click(function(){
+
+        // Closes the sliding #listings drawer in mobile
+        if ($(window).width() < 1200) {
+            $(window).scrollTop(0);
+            // Resize mapp container and recenter
+            $("#map").removeClass("map-short");
+            map.resize();
+
+            // Reposition map filter and show listings
+            $("#map-filter").css("top", "80vh");
+            $(".listings").addClass("hidden").removeClass("map-filter-tall");
+
+            // Change show list button to close button
+            $(".mobile-open-list").removeClass("hidden");
+            $(".mobile-close-list").addClass("hidden");
+        }
+        
         let itemTitle = $(this).val();
         let features = map.querySourceFeatures("composite", {
             sourceLayer: "soma-pilipinas", 
@@ -81,6 +95,10 @@ function handleMapClick() {
             return;
         }
         let feature = features[0];
+
+        map.flyTo({
+            center: feature.geometry.coordinates,
+        })
 
         addPopup(feature);
     })
@@ -112,10 +130,10 @@ function openSideBar(feature) {
             .empty()
             .removeClass("hidden")
             .append(
-                `<input type="image" src="images/arrow.png" name="close" alt="close" id="js-close" class="close-arrow" onclick="closeSideBar();"/>
+                `<input type="image" src="images/arrow.svg" name="close" alt="close" id="js-close" class="close-arrow" onclick="closeSideBar();"/>
                 <h2>${feature.properties.TITLE}</h2>
-                <p>${feature.properties.TYPE}</p>
-                <p>${feature.properties.SHORT_DESCRIPTION}</p>
+                <p class="sidebar-subhead">${feature.properties.TYPE}</p>
+                <p class="sidebar-description">${feature.properties.SHORT_DESCRIPTION}</p>
                 <p><a href="${feature.properties.WEBSITE}" target="_blank">${feature.properties.WEBSITE}</a></p>
                 `);
         let venueId = feature.properties.EVENTBRITE_ID;
@@ -127,45 +145,52 @@ function openSideBar(feature) {
             getEvents(url, options);
             };
 
-        if ($(window).width() < 1200) {
-            $("#map").addClass("hidden");
-            $("#map-filter").addClass("hidden");
+        if ($(window).width() >= 1200) {
+            $(".close-list").addClass("hidden");
         }
-        $("#listings").addClass("hidden");
     });
 
-    closeSideBar();
+    // closeSideBar();
 }
 
 function closeSideBar() {
         $("#sidebar").addClass("hidden");
         $("#map-filter").removeClass("hidden");
-        $("#listings").removeClass("hidden");
+        // $(".listings").Class("hidden");
         $("#map").removeClass("hidden");
-
+        
+        if ($(window).width() >= 1200) {
+            $(".close-list").removeClass("hidden");
+        }
 }
 
 function handleFilterClick() {
     $(".js-filter-button").click(function() {
 
+        // If there are open popups, remove them
         let popUps = document.getElementsByClassName('mapboxgl-popup');
         if (popUps[0]) popUps[0].remove();
         
+        // Check the current zoom level and center position of the map
         let center = map.getCenter();
         let newLng = center.lng.toFixed(3);
         let newLat = center.lat.toFixed(3);
         let centerString = `lng: ${newLng}, lat: ${newLat}`
-
         let zoom = map.getZoom();
 
-        if (centerString == "lng: -122.407, lat: 37.788" && zoom == 12.7) {
+        // If current zoom and center are at the default positions,
+        // then update map filter and listings
+        if (centerString == "lng: -122.406, lat: 37.785" && zoom == 13.2) {
             let selectedFilter = $("input.js-filter-button:checked").val();
             updateList(selectedFilter);
             updateMapView(selectedFilter);
+
+        // Otherwise reset the zoom and center first before updating map filter and listings
+        //  (this is bc it can only query visible points on the map)
         } else {
             map.flyTo({
-                center: [-122.407, 37.788],
-                zoom: 12.7
+                center: [-122.406, 37.785],
+                zoom: 13.2
             });
     
             map.on('zoomend', function () {
@@ -175,22 +200,108 @@ function handleFilterClick() {
             });
         }
 
-        $("#listings").scrollLeft(0).scrollTop(0);
+        // Reset the scroll to the top of the listings
+        $(".listings").scrollTop(0);
+        $(window).scrollTop(0);
     });
 }
 
 function updateMapView(selectedFilter) {
     if (selectedFilter == "All"){
-        $("#listings").removeClass("hidden");
         map.setFilter("soma-pilipinas");
     } else {
-        $("#listings").removeClass("hidden");
         map.setFilter("soma-pilipinas", ["==", "TYPE", selectedFilter]);
     };
 }
 
+function showList() {
+    // Mobile
+    $(".mobile-open-list").click(function() {
+        // Resize mapp container and recenter
+        $("#map").addClass("map-short");
+        map.resize();
+        map.setZoom(12.5);
+
+        // Reposition map filter and show listings
+        $("#map-filter").css("top", "50vh");
+        $(".listings").removeClass("hidden").addClass("map-filter-tall");
+        handleStickyFilter();
+
+        // Change show list button to close button
+        $(".mobile-open-list").addClass("hidden");
+        $(".mobile-close-list").removeClass("hidden");
+        closeList();
+    });
+
+    // Desktop
+    $(".open-list").click(function() {
+        $(".listings").removeClass("hidden");
+        $("#map").addClass("map-expanded");
+        
+        $(".open-list").addClass("hidden");
+        $(".close-list").removeClass("hidden");
+
+        // Delays transitions to execute after display property updates
+        listingsOpenTransition();
+        closeList();
+    })
+   
+}
+
+function listingsOpenTransition() {
+    setTimeout(function(){ 
+        $(".listings").addClass("expanded");
+        $("#nav").addClass("nav-expanded");
+        $(".open-list").addClass("fade-out");
+        }, 200);
+
+    setTimeout(function(){ 
+        $(".close-list").removeClass("fade-out");
+        }, 500);
+
+    setTimeout(function(){ 
+        map.resize();}, 300);
+}
+
+function closeList() {
+    $(".mobile-close-list").click(function() {
+        // Resize mapp container and recenter
+        $("#map").removeClass("map-short");
+        map.resize();
+
+        // Reposition map filter and show listings
+        $("#map-filter").css("top", "80vh");
+        $(".listings").addClass("hidden").removeClass("map-filter-tall");
+
+        // Change show list button to close button
+        $(".mobile-open-list").removeClass("hidden");
+        $(".mobile-close-list").addClass("hidden");
+    });
+
+    $(".close-list").click(function() {
+        $(".listings").removeClass("expanded");
+        $("#map").removeClass("map-expanded");
+        $("#nav").removeClass("nav-expanded");
+
+        $(".open-list").removeClass("hidden");
+        $(".close-list").addClass("hidden");
+
+        listingsCloseTransition();
+    })
+}
+
+function listingsCloseTransition() {
+    setTimeout(function(){ 
+        $(".listings").addClass("hidden");
+        $(".open-list").removeClass("fade-out");
+        $(".close-list").addClass("fade-out");}, 500);
+
+    setTimeout(function(){ 
+        map.resize();}, 320);
+}
+
 function updateList(selectedFilter) {
-    $("#listings").empty();
+    $(".listings").empty();
     if (selectedFilter == "All"){
         let filteredFeatures = map.querySourceFeatures("composite", {
             sourceLayer: "soma-pilipinas", 
@@ -218,10 +329,13 @@ function displayResults(filteredFeatures) {
     let newList = removeDupes(list);
 
     newList.sort().forEach(function(element){
-        $("#listings").append(`<button class="fly-to-button" type="button" role="button" value="${element}">${element}</button>`)
+        $(".listings").append(`
+        <div class="button-container">
+        <button class="fly-to-button" type="button" role="button" value="${element}">${element}</button>
+        </div>`)
     })
 
-    openPopup();
+    selectFromList();
 }
 
 function removeDupes(names) {
@@ -247,30 +361,55 @@ function buildDefaultList() {
 function handleStickyNav() {
     let navOffset = $("#nav").offset().top;
 
-    $(window).scroll(function(){
+        $(window).scroll(function(){
 
-        let scroll = $(window).scrollTop();
-        if (scroll >= navOffset) {
-            $("#nav").addClass("sticky");
-        } 
-        if (scroll < navOffset) {
-            $("#nav").removeClass("sticky");}
+            let scroll = $(window).scrollTop();
+            if (scroll >= navOffset) {
+                $("#nav").addClass("sticky-primary");
+                $("header").addClass("hidden");
+            } 
+            // if (scroll < navOffset) {
+            //     $("#nav").removeClass("sticky-primary");
+            // }
         });
 }
 
-function handleSlidingDrawer() {
-    // $(window).scroll(function() {   
-    //     if($(window).scrollTop() + $(window).height() == $(document).height()) {
-    //         alert("bottom!");
-    //     }
-    //  });
+function handleStickyFilter() {
+    let filterOffset = $("#map-filter").offset().top;
+    
+    if ($(window).width() < 1200) {
+        $(window).scroll(function(){
 
-    // $("#listings").scroll(function(){
-    //     let st = $(this).scrollTop();
-    //     let height = $("#listings").height();
-    //     $("#listings").height($("#listings").height()+st);
-    //     console.log(height);
-    //  });
+            let scroll = $(window).scrollTop();
+    
+            if (scroll >= filterOffset) {
+                // $("#map-filter").removeClass("map-filter-tall")
+                $("#map-filter").addClass("sticky-secondary");
+                $(".listings").css("margin-top", "20vh");
+            } 
+            if (scroll < filterOffset) {
+                $("#map-filter").removeClass("sticky-secondary");
+                $(".listings").css("margin-top", "0");
+            }
+            });
+    }
+}
+
+function handleWindowResize() {
+    $(window).resize(function(){
+        handleStickyFilter();
+        removeStyles();
+        map.resize();
+    });
+}
+
+function removeStyles() {
+    $("#map-filter").attr("style", "");
+    $("#map").attr("class", "");
+    $(".listings").attr("class", "listings hidden");
+    $(".open-list").removeClass("hidden fade-out");
+    $(".close-list").addClass("hidden");
+    $("#nav").removeClass("nav-expanded")
 }
 
 function handleMap() {
@@ -279,7 +418,8 @@ function handleMap() {
     handleFilterClick();
     buildDefaultList();
     handleStickyNav();
-    handleSlidingDrawer();
+    handleWindowResize();
+    showList();
 }
 
 $(handleMap);

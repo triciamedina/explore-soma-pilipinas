@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset='UTF-8'>
+    <meta charset="UTF-8">
     <title>Explore SOMA Pilipinas</title>
-    <meta name='viewport' content='initial-scale=1'>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet'>
+    <meta name="viewport" content="initial-scale=1">
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="images/favicon.ico">
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:700|Barlow:400,700|Space+Mono:400i&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css?family=Barlow+Condensed:700|Barlow:400,700|Space+Mono:400i&display=swap" rel="stylesheet">
 </head>
     <body>
-        <header role="banner">
+        <header role="banner" class="hidden">
             <div id="intro-container">
                 <img src="images/logo.png" width="128px" alt="SOMA PILIPINAS"/>
                 <h1>WELCOME TO <br>SOMA PILIPINAS</h1>
@@ -22,41 +22,56 @@
         </header>
         <main>
             <nav id="nav">
-                <img src="images/logo.png" width="65px" alt="SOMA PILIPINAS"/>
+                <img src="images/logo.png" class="logo" width="65px" alt="SOMA PILIPINAS"/>
+                <button role="button" type="button" class="open-list" aria-label="Open list"><h2>List</h2><img src="images/list.svg" /></button>
+                <button role="button" type="button" class="close-list hidden fade-out" aria-label="Close list"><img src="images/close.svg" /></button>
             </nav>
-            <div id="map"></div>
-            <div id="map-filter">
+            <section id="map"></section>
+            <section id="map-filter" class="mobile-default">
+                <button role="button" type="button" class="mobile-open-list" aria-label="Open list"><img src="images/list.svg" /></button>
+                <button role="button" type="button" class="mobile-close-list hidden" aria-label="Close list"><img src="images/close.svg" /></button>
                 <form>
                     <fieldset>
-                        <legend><h2>Filter</h2></legend>
-                        <div id="filter-wrapper">
-                            <label for="all" id="filter-all">
-                                <input class="js-filter-button" type="radio" name="filter" id="all" value="All" checked>
-                                <span>All</span>
-                            </label>
-                            <label for="business" id="filter-business">
-                                <input class="js-filter-button" type="radio" name="filter" id="business" value="Business">
-                                <span>Businesses</span>
-                            </label>
-                            <label for="community-organization" id="filter-community-organization">
-                                <input class="js-filter-button" type="radio" name="filter" id="community-organization" value="Community Organization">
-                                <span>Community Organizations</span>
-                            </label>
-                            <label for="community-landmark" id="filter-community-landmark">
-                                <input class="js-filter-button" type="radio" name="filter" id="community-landmark" value="Community Landmark">
-                                <span>Community Landmarks</span>
-                            </label>
-                            <label for="event" id="filter-events">
-                                <input class="js-filter-button" type="radio" name="filter" id="event" value="Event">
-                                <span>Events</span>
-                            </label>
-                        </div>
+                        <div id="form-container">
+                            <legend><h2>Explore</h2></legend>
+                            <div id="filter-wrapper">
+                                <div class="radio-container">
+                                    <label for="all" id="filter-all">
+                                        <input class="js-filter-button" type="radio" name="filter" id="all" value="All" checked>
+                                        <span>All</span>
+                                    </label>
+                                </div>
+                                <div class="radio-container">
+                                    <label for="business" id="filter-business">
+                                        <input class="js-filter-button" type="radio" name="filter" id="business" value="Business">
+                                        <span>Businesses</span>
+                                    </label>
+                                </div>
+                                <div class="radio-container">
+                                    <label for="community-organization" id="filter-community-organization">
+                                        <input class="js-filter-button" type="radio" name="filter" id="community-organization" value="Community Organization">
+                                        <span>Organizations</span>
+                                    </label>
+                                </div>
+                                <div class="radio-container">
+                                    <label for="community-landmark" id="filter-community-landmark">
+                                        <input class="js-filter-button" type="radio" name="filter" id="community-landmark" value="Community Landmark">
+                                        <span>Landmarks</span>
+                                    </label>
+                                </div>
+                                <div class="radio-container">
+                                    <label for="event" id="filter-events">
+                                        <input class="js-filter-button" type="radio" name="filter" id="event" value="Event">
+                                        <span>Events</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>    
                     </fieldset>        
-                 </form>
-            </div>
-            <div id="listings"></div>
-            <div id="sidebar" class="hidden">
-            </div>
+                </form>
+            </section>
+            <section class="listings hidden"></section>
+            <div id="sidebar" class="hidden"></div>
         </main>
         <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="index.js"></script>
