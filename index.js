@@ -60,11 +60,11 @@ function selectFromList() {
         if ($(window).width() < 1200) {
             $(window).scrollTop(0);
             // Resize mapp container and recenter
-            $("#map").removeClass("map-short");
+            $("#map").addClass("mobile-map-tall");
             map.resize();
 
             // Reposition map filter and show listings
-            $("#map-filter").css("top", "80vh");
+            $("#map-filter").removeClass("map-filter-tall");
             $(".listings").addClass("hidden").removeClass("map-filter-tall");
 
             // Change show list button to close button
@@ -157,7 +157,7 @@ function closeSideBar() {
         $("#sidebar").addClass("hidden");
         $("#map-filter").removeClass("hidden");
         // $(".listings").Class("hidden");
-        $("#map").removeClass("hidden");
+        // $("#map").removeClass("hidden");
         
         if ($(window).width() >= 1200) {
             $(".close-list").removeClass("hidden");
@@ -217,13 +217,13 @@ function updateMapView(selectedFilter) {
 function showList() {
     // Mobile
     $(".mobile-open-list").click(function() {
-        // Resize mapp container and recenter
-        $("#map").addClass("map-short");
+        // Resize map container and recenter
+        $("#map").removeClass("mobile-map-tall");
         map.resize();
         map.setZoom(12.5);
 
         // Reposition map filter and show listings
-        $("#map-filter").css("top", "50vh");
+        $("#map-filter").addClass("map-filter-tall");
         $(".listings").removeClass("hidden").addClass("map-filter-tall");
         handleStickyFilter();
 
@@ -266,11 +266,11 @@ function listingsOpenTransition() {
 function closeList() {
     $(".mobile-close-list").click(function() {
         // Resize mapp container and recenter
-        $("#map").removeClass("map-short");
+        $("#map").addClass("mobile-map-tall");
         map.resize();
 
         // Reposition map filter and show listings
-        $("#map-filter").css("top", "80vh");
+        $("#map-filter").removeClass("map-filter-tall");
         $(".listings").addClass("hidden").removeClass("map-filter-tall");
 
         // Change show list button to close button
@@ -287,7 +287,9 @@ function closeList() {
         $(".close-list").addClass("hidden");
 
         listingsCloseTransition();
-    })
+    });
+
+    showList();
 }
 
 function listingsCloseTransition() {
@@ -404,22 +406,37 @@ function handleWindowResize() {
 }
 
 function removeStyles() {
-    $("#map-filter").attr("style", "");
     $("#map").attr("class", "");
-    $(".listings").attr("class", "listings hidden");
-    $(".open-list").removeClass("hidden fade-out");
-    $(".close-list").addClass("hidden");
-    $("#nav").removeClass("nav-expanded")
+    $(".listings").removeClass("hidden");
+    // $(".listings").attr("class", "listings hidden");
+    $(".open-list").addClass("hidden");
+    $(".close-list").removeClass("hidden fade-out");
+    
+
+    if ($(window).width() >= 1200) {
+        $("#map").addClass("map-expanded");
+        $(".listings").addClass("expanded");
+        $("#nav").addClass("nav-expanded");
+    }
+
+    if ($(window).width() < 1200) {
+        $("#map-filter").addClass("map-filter-tall");
+        $(".listings").addClass("map-filter-tall").removeClass("hidden expanded");
+        $(".mobile-open-list").addClass("hidden");
+        $(".mobile-close-list").removeClass("hidden");
+
+    }
 }
 
 function handleMap() {
+    handleStickyFilter();
     renderMap();
     handleMapClick();
     handleFilterClick();
     buildDefaultList();
     handleStickyNav();
     handleWindowResize();
-    showList();
+    closeList();
 }
 
 $(handleMap);

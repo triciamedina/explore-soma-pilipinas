@@ -95,25 +95,19 @@ nav .logo {
     top: 0;
 }
 
-.sticky-secondary {
-    position: fixed !important;
-    top: 0px !important;
-    width: 100vw;
-}
-
 #map { 
     scroll-snap-align: start;
     width:100%;
     max-width: 100vw;
-    height: 80vh;
+    height: 50vh;
     position: fixed;
     top: 0;
     left: 0;
 }
 
-.map-short {
-    height: 50vh !important;
-    max-height: 50vh !important;
+.mobile-map-tall {
+    height: 80vh !important;
+    max-height: 80vh;
 }
 
 .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-group {
@@ -210,6 +204,10 @@ nav .logo {
     display: none;
 }
 
+.close-list {
+    display: none;
+}
+
 #map-filter {
     scroll-snap-align: end;
     position: relative;
@@ -223,13 +221,19 @@ nav .logo {
     overflow-y: hidden;
 }
 
-#mapfilter.mobile-default {
+/* #mapfilter.mobile-default {
     position: relative;
     top: 80vh;
-}
+} */
 
 .map-filter-tall {
     top: 50vh !important;
+}
+
+.sticky-secondary {
+    position: fixed !important;
+    top: 0px !important;
+    width: 100vw;
 }
 
 #form-container {
@@ -478,11 +482,8 @@ nav .logo {
     }
 
     main {
-        display: grid;
         width: 100vw;
         height: 100vh;
-        grid-template-columns: 2fr 1fr;
-        grid-template-rows: 1fr;
     }
 
     #nav {
@@ -499,6 +500,10 @@ nav .logo {
         margin-left: 30px;
     }
 
+    .map-filter-tall {
+        top: auto !important;
+    }
+
     #map { 
         position: absolute;
         height: 100%;
@@ -510,6 +515,8 @@ nav .logo {
     .map-expanded {
         width: 70vw !important;
         max-width: 70vw !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
         transition: all 0.5s;
     }
     

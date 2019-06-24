@@ -21,15 +21,15 @@
             </div>
         </header>
         <main>
-            <nav id="nav">
+            <nav id="nav" class="nav-expanded">
                 <img src="images/logo.png" class="logo" width="65px" alt="SOMA PILIPINAS"/>
-                <button role="button" type="button" class="open-list" aria-label="Open list"><h2>List</h2><img src="images/list.svg" /></button>
-                <button role="button" type="button" class="close-list hidden fade-out" aria-label="Close list"><img src="images/close.svg" /></button>
+                <button role="button" type="button" class="open-list hidden fade-out" aria-label="Open list"><h2>List</h2><img src="images/list.svg" /></button>
+                <button role="button" type="button" class="close-list" aria-label="Close list"><img src="images/close.svg" /></button>
             </nav>
-            <section id="map"></section>
-            <section id="map-filter" class="mobile-default">
-                <button role="button" type="button" class="mobile-open-list" aria-label="Open list"><img src="images/list.svg" /></button>
-                <button role="button" type="button" class="mobile-close-list hidden" aria-label="Close list"><img src="images/close.svg" /></button>
+            <section id="map" class="map-expanded"></section>
+            <section id="map-filter" class="map-filter-tall">
+                <button role="button" type="button" class="mobile-open-list hidden" aria-label="Open list"><img src="images/list.svg" /></button>
+                <button role="button" type="button" class="mobile-close-list" aria-label="Close list"><img src="images/close.svg" /></button>
                 <form>
                     <fieldset>
                         <div id="form-container">
@@ -70,7 +70,7 @@
                     </fieldset>        
                 </form>
             </section>
-            <section class="listings hidden"></section>
+            <section class="listings map-filter-tall expanded"></section>
             <div id="sidebar" class="hidden"></div>
         </main>
         <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
