@@ -400,7 +400,7 @@ function handleStickyFilter() {
 function handleWindowResize() {
     $(window).resize(function(){
         handleStickyFilter();
-        removeStyles();
+        // removeStyles();
         map.resize();
     });
 }
