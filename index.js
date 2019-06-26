@@ -13,15 +13,19 @@ mapboxgl.accessToken = "pk.eyJ1IjoidHJpY2lhbWVkaW5hIiwiYSI6ImNqdm9uOGYweDIwYTU0M
 const map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/triciamedina/cjw8micvr5so61cpi0wx38qnr?fresh=true",
-    center: [-122.406, 37.785],
+    center: [-122.406, 37.780],
     zoom: 13.2,
     trackResize: true,
 });
 
 function renderMap() {
     let zoom = new mapboxgl.NavigationControl({showCompass: false,});
-    map.addControl(zoom, "bottom-right");
+    map.addControl(zoom, "bottom-left");
     map.scrollZoom.disable();
+    if ($(window).width() >= 1200) {
+        map.setZoom(14);
+        map.setCenter([-122.409, 37.780]);
+    }
     map.on("mouseenter", "soma-pilipinas", function(e) {
         map.getCanvas().style.cursor = 'pointer';
     });
@@ -42,7 +46,7 @@ function addPopup(feature) {
         .setLngLat(feature.geometry.coordinates)
         .setHTML(
         `<h2>${feature.properties.TITLE}</h2>
-        <button class="js-open-sidebar-button" type="button" role="button">Learn more</button>
+        <button class="js-open-sidebar-button" type="button" role="button" aria-label="Learn more">Learn more</button>
         `)
         .addTo(map);
     
@@ -58,14 +62,14 @@ function selectFromList() {
 
         // Closes the sliding #listings drawer in mobile
         if ($(window).width() < 1200) {
-            $(window).scrollTop(0);
+            // $(window).scrollTop(0);
             // Resize mapp container and recenter
             $("#map").addClass("mobile-map-tall");
             map.resize();
 
             // Reposition map filter and show listings
-            $("#map-filter").removeClass("map-filter-tall");
-            $(".listings").addClass("mobile-hidden").removeClass("map-filter-tall");
+            $("#map-filter").addClass("map-filter-short");
+            $(".listings").addClass("mobile-hidden");
 
             // Change show list button to close button
             $(".mobile-open-list").removeClass("mobile-hidden");
@@ -128,7 +132,7 @@ function openSideBar(feature) {
     $(".js-open-sidebar-button").click(function() {
         $("#sidebar")
             .empty()
-            .removeClass("hidden")
+            .addClass("sidebar-open")
             .append(
                 `<input type="image" src="images/arrow.svg" name="close" alt="close" id="js-close" class="close-arrow" onclick="closeSideBar();"/>
                 <h2>${feature.properties.TITLE}</h2>
@@ -154,7 +158,7 @@ function openSideBar(feature) {
 }
 
 function closeSideBar() {
-        $("#sidebar").addClass("hidden");
+        $("#sidebar").removeClass("sidebar-open");
         // $("#map-filter").removeClass("hidden");
         // $(".listings").Class("hidden");
         // $("#map").removeClass("hidden");
@@ -178,27 +182,56 @@ function handleFilterClick() {
         let centerString = `lng: ${newLng}, lat: ${newLat}`
         let zoom = map.getZoom();
 
-        // If current zoom and center are at the default positions,
-        // then update map filter and listings
-        if (centerString == "lng: -122.406, lat: 37.785" && zoom == 13.2) {
-            let selectedFilter = $("input.js-filter-button:checked").val();
-            updateList(selectedFilter);
-            updateMapView(selectedFilter);
-
-        // Otherwise reset the zoom and center first before updating map filter and listings
-        //  (this is bc it can only query visible points on the map)
-        } else {
-            map.flyTo({
-                center: [-122.406, 37.785],
-                zoom: 13.2
-            });
-    
-            map.on('zoomend', function () {
+        // Mobile
+        if ($(window).width() < 1200){
+            // If current zoom and center are at the default positions,
+            // then update map filter and listings
+            if (centerString == "lng: -122.406, lat: 37.780" && zoom == 13.2) {
                 let selectedFilter = $("input.js-filter-button:checked").val();
                 updateList(selectedFilter);
                 updateMapView(selectedFilter);
-            });
+
+            // Otherwise reset the zoom and center first before updating map filter and listings
+            //  (this is bc it can only query visible points on the map)
+            } else {
+                map.flyTo({
+                    center: [-122.406, 37.780],
+                    zoom: 13.2
+                });
+    
+                map.on('zoomend', function () {
+                    let selectedFilter = $("input.js-filter-button:checked").val();
+                    updateList(selectedFilter);
+                    updateMapView(selectedFilter);
+                });
+            }
         }
+
+        // Desktop
+        if ($(window).width() >= 1200){
+            // If current zoom and center are at the default positions,
+            // then update map filter and listings
+            if (centerString == "lng: -122.409, lat: 37.780" && zoom == 14) {
+                let selectedFilter = $("input.js-filter-button:checked").val();
+                updateList(selectedFilter);
+                updateMapView(selectedFilter);
+
+            // Otherwise reset the zoom and center first before updating map filter and listings
+            //  (this is bc it can only query visible points on the map)
+            } else {
+                map.flyTo({
+                    center: [-122.409, 37.780],
+                    zoom: 14
+                });
+    
+                map.on('zoomend', function () {
+                    let selectedFilter = $("input.js-filter-button:checked").val();
+                    updateList(selectedFilter);
+                    updateMapView(selectedFilter);
+                });
+            }
+        }
+        
 
         // Reset the scroll to the top of the listings
         $(".listings").scrollTop(0);
@@ -214,7 +247,7 @@ function updateMapView(selectedFilter) {
     };
 }
 
-function showList() {
+function openList() {
     // Mobile
     $(".mobile-open-list").click(function() {
         // Resize map container and recenter
@@ -223,8 +256,8 @@ function showList() {
         map.setZoom(12.5);
 
         // Reposition map filter and show listings
-        $("#map-filter").addClass("map-filter-tall");
-        $(".listings").removeClass("mobile-hidden").addClass("map-filter-tall");
+        $("#map-filter").removeClass("map-filter-short");
+        $(".listings").removeClass("mobile-hidden");
         handleStickyFilter();
 
         // Change show list button to close button
@@ -250,7 +283,7 @@ function showList() {
 
 function listingsOpenTransition() {
     setTimeout(function(){ 
-        $(".listings").addClass("expanded");
+        $(".listings").addClass("desktop-expanded");
         $("#nav").addClass("nav-expanded");
         $(".open-list").addClass("fade-out");
         }, 200);
@@ -270,8 +303,8 @@ function closeList() {
         map.resize();
 
         // Reposition map filter and show listings
-        $("#map-filter").removeClass("map-filter-tall");
-        $(".listings").addClass("mobile-hidden").removeClass("map-filter-tall");
+        $("#map-filter").addClass("map-filter-short");
+        $(".listings").addClass("mobile-hidden");
 
         // Change show list button to close button
         $(".mobile-open-list").removeClass("mobile-hidden");
@@ -279,7 +312,7 @@ function closeList() {
     });
 
     $(".close-list").click(function() {
-        $(".listings").removeClass("expanded");
+        $(".listings").removeClass("desktop-expanded");
         $("#map").removeClass("map-expanded");
         $("#nav").removeClass("nav-expanded");
 
@@ -289,7 +322,7 @@ function closeList() {
         listingsCloseTransition();
     });
 
-    showList();
+    openList();
 }
 
 function listingsCloseTransition() {
@@ -333,7 +366,7 @@ function displayResults(filteredFeatures) {
     newList.sort().forEach(function(element){
         $(".listings").append(`
         <div class="button-container">
-        <button class="fly-to-button" type="button" role="button" value="${element}">${element}</button>
+        <button class="fly-to-button" type="button" role="button" value="${element}" aria-label="${element}">${element}</button>
         </div>`)
     })
 
@@ -400,32 +433,9 @@ function handleStickyFilter() {
 function handleWindowResize() {
     $(window).resize(function(){
         handleStickyFilter();
-        removeStyles();
         setTimeout(function(){ 
             map.resize();}, 500);
     });
-}
-
-function removeStyles() {
-    // $("#map").attr("class", "");
-    // $(".listings").removeClass("hidden");
-    // $(".listings").attr("class", "listings hidden");
-    // $(".open-list").addClass("hidden");
-    // $(".close-list").removeClass("hidden fade-out");
-    
-
-    if ($(window).width() >= 1200) {
-        $(".listings").removeClass("mobile-hidden");
-        $("#map").removeClass("mobile-map-tall");
-    }
-
-    if ($(window).width() < 1200) {
-        $("#map-filter").addClass("map-filter-tall");
-        $(".listings").addClass("map-filter-tall");
-        $(".mobile-open-list").addClass("mobile-hidden");
-        $(".mobile-close-list").removeClass("mobile-hidden");
-
-    }
 }
 
 function handleMap() {
