@@ -18,14 +18,20 @@ const map = new mapboxgl.Map({
     trackResize: true,
 });
 
+function setZoom() {
+    if ($(window).width() >= 1200) {
+        map.setZoom(14);
+        map.setCenter([-122.409, 37.780]);
+    } else {
+        map.setZoom(13.2);
+        map.setCenter([-122.406, 37.780]);
+    }
+}
+
 function renderMap() {
     let zoom = new mapboxgl.NavigationControl({showCompass: false,});
     map.addControl(zoom, "bottom-left");
     map.scrollZoom.disable();
-    if ($(window).width() >= 1200) {
-        map.setZoom(14);
-        map.setCenter([-122.409, 37.780]);
-    }
     map.on("mouseenter", "soma-pilipinas", function(e) {
         map.getCanvas().style.cursor = 'pointer';
     });
@@ -435,18 +441,38 @@ function handleWindowResize() {
         handleStickyFilter();
         setTimeout(function(){ 
             map.resize();}, 500);
+        setZoom();
     });
 }
 
+function handleAboutButton() {
+    $(".js-about-button").click(function() {
+        $("header").toggleClass("hidden");
+        $("main").toggleClass("hidden")
+
+        map.resize();
+        setZoom();
+        handleStickyFilter();
+        handleMapClick();
+        handleFilterClick();
+        buildDefaultList();
+        handleStickyNav();
+        handleWindowResize();
+        closeList();
+    })
+}
+
 function handleMap() {
-    handleStickyFilter();
-    renderMap();
-    handleMapClick();
-    handleFilterClick();
+    handleAboutButton();
+    setZoom();
+    // handleStickyFilter();
+    // renderMap();
+    // handleMapClick();
+    // handleFilterClick();
     buildDefaultList();
-    handleStickyNav();
+    // handleStickyNav();
     handleWindowResize();
-    closeList();
+    // closeList();
 }
 
 $(handleMap);
