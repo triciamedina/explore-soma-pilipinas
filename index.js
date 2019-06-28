@@ -456,7 +456,7 @@ function handleAboutButton() {
         handleMapClick();
         handleFilterClick();
         buildDefaultList();
-        handleStickyNav();
+        // handleStickyNav();
         handleWindowResize();
         closeList();
     })

@@ -250,8 +250,15 @@ nav .logo {
     width: 100vw;
 }
 
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
 #map-filter h2 {
-    margin: 30px 20px 10px 20px;
+    margin: 10px 20px 10px 20px;
     padding: 0px 0px 0px 0px;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: bold; 
@@ -475,7 +482,7 @@ nav .logo {
 
     #map-filter h2 {
         margin: 25px 20px 20px 20px;
-        font-size: 14px;
+        font-size: 17px;
     }
 
     #map-filter label{
@@ -657,9 +664,16 @@ nav .logo {
         margin-left: 30px;
         box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.04);
     }
+
+    .form-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 10px;
+    }
     
     #map-filter h2 {
-        margin: 10px;
+        margin: 0px 10px 0px 10px;
         padding: 0px;
     }
 
@@ -675,7 +689,7 @@ nav .logo {
 
     #filter-wrapper {
         flex-direction: column;
-        margin: 10px;
+        margin: 20px 0px 10px 10px;
     }
 
     .listings {
