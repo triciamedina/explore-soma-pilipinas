@@ -428,6 +428,22 @@ function handleStickyFilter() {
             if (scroll >= filterOffset) {
                 // $("#map-filter").removeClass("map-filter-tall")
                 $("#map-filter").addClass("sticky-secondary");
+                $(".listings").css("margin-top", "15vh");
+            } 
+            if (scroll < filterOffset) {
+                $("#map-filter").removeClass("sticky-secondary");
+                $(".listings").css("margin-top", "0");
+            }
+            });
+    }
+    if ($(window).width() < 768) {
+        $(window).scroll(function(){
+
+            let scroll = $(window).scrollTop();
+    
+            if (scroll >= filterOffset) {
+                // $("#map-filter").removeClass("map-filter-tall")
+                $("#map-filter").addClass("sticky-secondary");
                 $(".listings").css("margin-top", "20vh");
             } 
             if (scroll < filterOffset) {
