@@ -490,7 +490,7 @@ function handleMap() {
     buildDefaultList();
     // handleStickyNav();
     handleWindowResize();
-    // closeList();
+    closeList();
 }
 
 $(handleMap);

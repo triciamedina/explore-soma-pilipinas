@@ -215,6 +215,7 @@ form {
     right: 0;
     border: 0;
     background-color: transparent;
+    z-index: 4;
 }
 
 .mobile-open-list img, .mobile-close-list img  {
