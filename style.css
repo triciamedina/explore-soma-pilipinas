@@ -125,9 +125,8 @@ nav .logo {
     max-height: 65vh;
 }
 
-.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl-group {
-    margin-bottom: 10px;
-    margin-left: 10px;
+.mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-group {
+    margin-bottom: 20px;
 }
 
 .mapboxgl-popup {
@@ -202,6 +201,12 @@ nav .logo {
     color: white;
     }
 
+form {
+    position: relative;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 .mobile-open-list, .mobile-close-list {
     display: block;
     cursor: pointer;
@@ -215,7 +220,6 @@ nav .logo {
 .mobile-open-list img, .mobile-close-list img  {
     width: 20px;
     height: 20px;
-    margin: 30px 20px 10px 20px;
 }
 
 .open-list {
@@ -227,7 +231,6 @@ nav .logo {
 }
 
 #map-filter {
-    scroll-snap-align: end;
     position: relative;
     top: 55vh;
     height: 20vh;
@@ -238,6 +241,9 @@ nav .logo {
     /* border-bottom: 1px solid lightgray; */
     overflow-y: hidden;
     box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .map-filter-short {
@@ -250,15 +256,7 @@ nav .logo {
     width: 100vw;
 }
 
-.form-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-}
-
 #map-filter h2 {
-    margin: 10px 20px 10px 20px;
     padding: 0px 0px 0px 0px;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: bold; 
@@ -272,13 +270,17 @@ nav .logo {
     border: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
 }
 
 #filter-wrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin: 10px 0px 10px 20px;
+    margin-top: 20px;
 }
 
 #map-filter .radio-container {
@@ -349,8 +351,8 @@ nav .logo {
 }
 
 .radio-container label#filter-events input:checked + span::before {
-    background: #edc473;
-    border: 1px solid #edc473;
+    background: #57c8ef;
+    border: 1px solid #57c8ef;
 }
 
 .listings {
@@ -470,79 +472,35 @@ nav .logo {
         width: auto;
     }
 
-    /* #filter-wrapper {
-        margin-top: 0px;
-    } */
-
     .mobile-open-list img, .mobile-close-list img {
         width: 15px;
         height: 15px;
-        margin: 25px 20px 20px 20px;
     }
 
     #map-filter h2 {
-        /* margin: 25px 20px 20px 20px; */
         font-size: 17px;
     }
 
     #map-filter label{
         font-size: 11px;
     }
-    
 }
 
 @media screen and (max-height: 700px) {
-    nav .logo {
-        height: 10vh;
-        width: auto;
-    }
-
-    /* #filter-wrapper {
-        margin-top: 0px;
-    } */
-
-    .mobile-open-list img, .mobile-close-list img {
-        width: 15px;
-        height: 15px;
-        margin: 20px 20px 20px 20px;
-    }
-
     #map-filter h2 {
-        /* margin: 20px 20px 20px 20px; */
         font-size: 14px;
     }
-
-    #map-filter label{
-        font-size: 11px;
-    }
-    
   }
 
 @media screen and (max-height: 600px) {
-    nav .logo {
-        height: 10vh;
-        width: auto;
+    form {
+        margin-left: 15px;
+        margin-right: 15px;
     }
 
-    /* #filter-wrapper {
-        margin-top: 0px;
-    } */
-
-    .mobile-open-list img, .mobile-close-list img {
-        width: 15px;
-        height: 15px;
-        margin: 10px 20px 10px 20px;
+    #filter-wrapper {
+        margin-top: 10px;
     }
-
-    #map-filter h2 {
-        /* margin: 15px 20px 10px 20px; */
-        font-size: 14px;
-    }
-
-    #map-filter label{
-        font-size: 11px;
-    }
-    
 }
 
 @media screen and (min-width: 1200px) {
@@ -628,9 +586,9 @@ nav .logo {
         max-height: 100vh !important;
     }
 
-    .mapboxgl-ctrl-bottom-left .mapboxgl-ctrl-group {
-        margin-bottom: 30px;
-        margin-left: 30px;
+    .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-group {
+        margin-bottom: 10px;
+        margin-right: 10px;
     }
 
     #map { 
@@ -656,20 +614,20 @@ nav .logo {
     #map-filter {
         position: absolute;
         top: auto;
-        bottom: 150px;
+        bottom: 50px;
         height: auto;
         width: 200px;
         border-bottom: 0px;
         padding: 20px;
         margin-left: 30px;
         box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.04);
-    }
-
-    .form-wrapper {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding-top: 10px;
+    }
+
+    form {
+        margin: 0px;
     }
     
     #map-filter h2 {

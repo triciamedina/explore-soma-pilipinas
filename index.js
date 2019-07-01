@@ -30,7 +30,7 @@ function setZoom() {
 
 function renderMap() {
     let zoom = new mapboxgl.NavigationControl({showCompass: false,});
-    map.addControl(zoom, "bottom-left");
+    map.addControl(zoom, "bottom-right");
     map.scrollZoom.disable();
     map.on("mouseenter", "soma-pilipinas", function(e) {
         map.getCanvas().style.cursor = 'pointer';
@@ -91,6 +91,7 @@ function selectFromList() {
 
         map.flyTo({
             center: feature.geometry.coordinates,
+            zoom: 15,
         })
         addPopup(feature);
     });
@@ -108,6 +109,7 @@ function handleMapClick() {
 
         map.flyTo({
             center: feature.geometry.coordinates,
+            zoom: 15,
         })
 
         addPopup(feature);
@@ -399,21 +401,21 @@ function buildDefaultList() {
     })
 }
 
-function handleStickyNav() {
-    let navOffset = $("#nav").offset().top;
+// function handleStickyNav() {
+//     let navOffset = $("#nav").offset().top;
 
-        $(window).scroll(function(){
+//         $(window).scroll(function(){
 
-            let scroll = $(window).scrollTop();
-            if (scroll >= navOffset) {
-                $("#nav").addClass("sticky-primary");
-                $("header").addClass("hidden");
-            } 
-            // if (scroll < navOffset) {
-            //     $("#nav").removeClass("sticky-primary");
-            // }
-        });
-}
+//             let scroll = $(window).scrollTop();
+//             if (scroll >= navOffset) {
+//                 $("#nav").addClass("sticky-primary");
+//                 $("header").addClass("hidden");
+//             } 
+//             if (scroll < navOffset) {
+//                 $("#nav").removeClass("sticky-primary");
+//             }
+//         });
+// }
 
 function handleStickyFilter() {
     let filterOffset = $("#map-filter").offset().top;
@@ -466,7 +468,7 @@ function handleMap() {
     handleAboutButton();
     setZoom();
     // handleStickyFilter();
-    // renderMap();
+    renderMap();
     // handleMapClick();
     // handleFilterClick();
     buildDefaultList();

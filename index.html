@@ -27,13 +27,13 @@
                 <button role="button" type="button" class="close-list" aria-label="Close list"><img src="images/close.svg" alt="Close list"/></button>
             </nav>
             <section id="map" class="map-expanded"></section>
-            <section id="map-filter">
-                <button role="button" type="button" class="mobile-open-list mobile-hidden" aria-label="Open list"><img src="images/list.svg" alt="Open list"/></button>
-                <button role="button" type="button" class="mobile-close-list" aria-label="Close list"><img src="images/close.svg" alt="Close list"/></button>
-                <div class="form-wrapper">
+            <section id="map-filter" class="form-wrapper">
                 <form>
+                        <button role="button" type="button" class="mobile-open-list mobile-hidden" aria-label="Open list"><img src="images/list.svg" alt="Open list"/></button>
+                        <button role="button" type="button" class="mobile-close-list" aria-label="Close list"><img src="images/close.svg" alt="Close list"/></button>
                     <fieldset>
                             <legend><h2>Explore</h2></legend>
+                            
                             <div id="filter-wrapper">
                                 <div class="radio-container">
                                     <label for="all" id="filter-all">
@@ -68,7 +68,6 @@
                             </div>
                     </fieldset>        
                 </form>
-            </div>
             </section>
             <section class="listings desktop-expanded"></section>
             <div id="sidebar" ></div>
