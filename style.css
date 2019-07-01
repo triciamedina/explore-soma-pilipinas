@@ -11,19 +11,33 @@ body {
     overflow-x: scroll;
     overflow-y: scroll;
     height: 100%;
+    width: 100%;
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
 }
 
 header {
+    position: absolute;
     height: 100vh;
-    /* z-index: 5; */
+    width: 100vw;
     background-color: white;
     display: flex;
     justify-content: center;
     align-items: space-evenly;
-    position: relative;
     text-align: center;
+    visibility: visible;
+    opacity: 1;
+    top: 0;
+    transition: all .5s ease-in-out;
+    z-index: 5;
+}
+
+header.hide {
+    visibility: hidden;
+    opacity: 0;
+    top: -100vh;
+    transition: all .5s ease-in-out;
+    z-index: -1;
 }
 
 #intro-container {
@@ -45,25 +59,29 @@ header {
     line-height: 44px;
 }
 
-#intro-container .cta {
+#intro-container button {
     margin: 0px;
-    font-size: 18px;
-    line-height: 28px;
-    font-family: 'Space Mono', monospace;
-    color: black;
-    text-decoration: none;
-    border: 0px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: bold; 
+    text-transform: uppercase;
+    font-size: 15px;
+    letter-spacing: 1.53px;
+    color: #303030;
+    border: 2px solid #D5AD4F;
+    border-radius: 3px;
     cursor: pointer;
     background-color: transparent;
+    padding: 20px 30px;
+    transition: 0.1s background-color linear;
 }
 
-#intro-container a:visited {
-    color: black;
-    text-decoration: none;
-}
-
-span.black-bg {
+#intro-container button:hover {
     background-color: #D5AD4F;
+    transition: 0.1s background-color linear;
+}
+
+#intro-container a, #intro-container a:visited {
+    color: black;
 }
 
 p {
@@ -83,11 +101,11 @@ main {
 }
 
 nav {
-    position: absolute;
+    position: fixed;
+    top: 0px;
+    width: 100vw;
     height: 15vh;
-    top: 0;
     left: 0;
-    width: 100%;
     background-color: rgb(255, 255, 255, 1);
     z-index: 2;
     box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.02);
@@ -111,8 +129,7 @@ nav .logo {
 }
 
 #map { 
-    scroll-snap-align: start;
-    width:100%;
+    width: 100%;
     max-width: 100vw;
     height: 40vh;
     position: fixed;
@@ -364,7 +381,6 @@ form {
     align-items: flex-start;
     overflow-y: scroll;
     background: white;
-    /* padding: 0px 20px 20px 20px; */
     margin-bottom: 20px;
     z-index: 3;
 }
@@ -414,12 +430,6 @@ form {
 }
 
 #sidebar h2 {
-    /* font-family: 'Barlow', sans-serif;
-    font-weight: bold;
-    font-weight: normal;
-    text-transform: uppercase;
-    font-size: 17.75px;
-    letter-spacing: 0.18em; */
     font-family: 'Barlow', sans-serif;
     font-weight: normal;
     font-size: 22px;
@@ -519,13 +529,18 @@ form {
 
 /* Tablet */
 @media screen and (min-width: 768px) and (max-width: 1199px) {
-    nav {
-        height: 12vh;
+    .mobile-map-tall {
+        height: 70vh !important;
+        max-height: 70vh !important;
     }
 
-    #map {
-        top: 12vh;
-        height: 43vh;
+    .map-filter-short {
+        top: 85vh !important;
+    }
+
+    nav .logo {
+        height: 10vh;
+        width: auto;
     }
 
     #map-filter {
@@ -662,7 +677,7 @@ form {
     }
     
     #map-filter h2 {
-        margin: 0px 10px 0px 10px;
+        margin: 10px 10px 0px 10px;
         padding: 0px;
     }
 
@@ -678,7 +693,7 @@ form {
 
     #filter-wrapper {
         flex-direction: column;
-        margin: 20px 0px 10px 10px;
+        margin: 20px 0px 0px 10px;
     }
 
     .listings {
@@ -706,7 +721,6 @@ form {
 
     .listings button {
         margin-right: 0px;
-        /* margin-bottom: 18px; */
     }
 
     #sidebar {

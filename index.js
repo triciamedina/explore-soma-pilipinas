@@ -45,7 +45,7 @@ function addPopup(feature) {
     if (popUps[0]) popUps[0].remove();
 
     let popup = new mapboxgl.Popup({ 
-        offset: [0, -15],
+        offset: [0, -6],
         closeButton: true,
         closeOnClick: true,
         })
@@ -91,7 +91,7 @@ function selectFromList() {
 
         map.flyTo({
             center: feature.geometry.coordinates,
-            zoom: 15,
+            zoom: 15.5,
         })
         addPopup(feature);
     });
@@ -109,7 +109,7 @@ function handleMapClick() {
 
         map.flyTo({
             center: feature.geometry.coordinates,
-            zoom: 15,
+            zoom: 15.5,
         })
 
         addPopup(feature);
@@ -401,22 +401,6 @@ function buildDefaultList() {
     })
 }
 
-// function handleStickyNav() {
-//     let navOffset = $("#nav").offset().top;
-
-//         $(window).scroll(function(){
-
-//             let scroll = $(window).scrollTop();
-//             if (scroll >= navOffset) {
-//                 $("#nav").addClass("sticky-primary");
-//                 $("header").addClass("hidden");
-//             } 
-//             if (scroll < navOffset) {
-//                 $("#nav").removeClass("sticky-primary");
-//             }
-//         });
-// }
-
 function handleStickyFilter() {
     let filterOffset = $("#map-filter").offset().top;
     
@@ -426,7 +410,6 @@ function handleStickyFilter() {
             let scroll = $(window).scrollTop();
     
             if (scroll >= filterOffset) {
-                // $("#map-filter").removeClass("map-filter-tall")
                 $("#map-filter").addClass("sticky-secondary");
                 $(".listings").css("margin-top", "15vh");
             } 
@@ -442,7 +425,6 @@ function handleStickyFilter() {
             let scroll = $(window).scrollTop();
     
             if (scroll >= filterOffset) {
-                // $("#map-filter").removeClass("map-filter-tall")
                 $("#map-filter").addClass("sticky-secondary");
                 $(".listings").css("margin-top", "20vh");
             } 
@@ -465,7 +447,7 @@ function handleWindowResize() {
 
 function handleAboutButton() {
     $(".js-about-button").click(function() {
-        $("header").toggleClass("hidden");
+        $("header").toggleClass("hide");
         $("main").toggleClass("hidden")
 
         map.resize();
@@ -474,7 +456,6 @@ function handleAboutButton() {
         handleMapClick();
         handleFilterClick();
         buildDefaultList();
-        // handleStickyNav();
         handleWindowResize();
         closeList();
     })
@@ -483,12 +464,8 @@ function handleAboutButton() {
 function handleMap() {
     handleAboutButton();
     setZoom();
-    // handleStickyFilter();
     renderMap();
-    // handleMapClick();
-    // handleFilterClick();
     buildDefaultList();
-    // handleStickyNav();
     handleWindowResize();
     closeList();
 }
