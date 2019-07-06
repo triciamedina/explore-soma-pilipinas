@@ -47,7 +47,7 @@ header.hide {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    color: #303030;
+    color: #222;
 }
 
 #intro-container h1 {
@@ -66,7 +66,7 @@ header.hide {
     text-transform: uppercase;
     font-size: 15px;
     letter-spacing: 1.53px;
-    color: #303030;
+    color: #222;
     border: 2px solid #D5AD4F;
     border-radius: 3px;
     cursor: pointer;
@@ -81,7 +81,7 @@ header.hide {
 }
 
 #intro-container a, #intro-container a:visited {
-    color: black;
+    color: #222;
 }
 
 p {
@@ -148,7 +148,6 @@ nav .logo {
 
 .mapboxgl-popup {
     max-width: 250px;
-    box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.02);
 }
 
 .mapboxgl-popup-content {
@@ -179,44 +178,26 @@ nav .logo {
     color: rgb(155, 155, 155);
 }
 
-.mapboxgl-popup-close-button {
-    color: white;
-    width: 22px;
-    height: 22px;
-    background-color: black;
-    top: -11px;
-    right: -11px;
-    border-radius: 0;
-    font-size: 18px;
-    line-height: 22px;
-    vertical-align: middle;
-}
-
-.mapboxgl-popup-close-button:hover {
-    background-color: black;
-}
-
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
 .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
 .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
     border-bottom-color: black;
-    }
+}
 .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
 .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
 .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
     border-top-color: black;
-    }
+}
 .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
     border-right-color: black;
-    }
+}
 .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
     border-left-color: black;
-    }
+}
 
 .js-open-sidebar-button {
     background-color: black;
-    color: white;
-    }
+}
 
 form {
     position: relative;
@@ -318,6 +299,27 @@ form {
     flex: 0 0 auto;
     color: #303030;
     border: 0px;
+    transition: 0.1s all linear;
+}
+
+label#filter-business:hover, label#filter-business input:checked + span {
+    color: #008a87;
+    transition: 0.1s all linear;
+}
+
+label#filter-community-organization:hover, label#filter-community-organization input:checked + span {
+    color: #a760a9;
+    transition: 0.1s all linear;
+}
+
+label#filter-community-landmark:hover, label#filter-community-landmark input:checked + span {
+    color: #fa6800;
+    transition: 0.1s all linear;
+}
+
+label#filter-events:hover, label#filter-events input:checked + span {
+    color: #57c8ef;
+    transition: 0.1s all linear;
 }
 
 #map-filter input {
@@ -417,9 +419,11 @@ form {
     opacity: 0;
     visibility: hidden;
     z-index: 4;
-    padding: 40px;
+    padding: 30px;
     overflow-y: scroll;
     transition: all 0.3s;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .sidebar-open {
@@ -432,30 +436,28 @@ form {
 #sidebar h2 {
     font-family: 'Barlow', sans-serif;
     font-weight: normal;
-    font-size: 22px;
-    line-height: 1.3em;
+    font-size: 28px;
+    line-height: 33.6px;
     letter-spacing: 0.01em;
-    margin: 30px 0px 30px 0px;
+    margin: 15px 0px 30px 0px;
     max-width: 70%;
 }
 
 .sidebar-subhead {
-    margin-bottom: 30px;
+    margin-top: 50px;
     color: rgb(155, 155, 155);
-    font-family: 'Barlow', sans-serif;
-    font-weight: normal;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: bold; 
+    text-transform: uppercase;
     font-size: 14px;
-    line-height: 1.9em;
-    letter-spacing: .01em;
+    letter-spacing: 1.53px;
 }
 
 .sidebar-description {
-    margin-bottom: 30px;
-    color: rgb(155, 155, 155);
     font-family: 'Barlow', sans-serif;
     font-weight: normal;
-    font-size: 14px;
-    line-height: 1.9em;
+    font-size: 16px;
+    line-height: 25px;
     letter-spacing: .01em;
 }
 
@@ -466,6 +468,95 @@ form {
 
 #sidebar a, #sidebar a:visited {
     color: white;
+    text-decoration: none;
+    transition: 0.1s background-color linear;
+}
+
+#sidebar a:hover {
+    color: #d5ad4f;
+    transition: 0.1s background-color linear;
+}
+
+.sidebar-description::after {
+    content: "";
+    display: block;
+    width: 50%;
+    border-top: 1px solid rgb(155, 155, 155);
+    margin-top: 50px;
+}
+
+.sidebar-website {
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: .01em;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.sidebar-address-1 {
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: .01em;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.sidebar-address-2 {
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: .01em;
+    margin-bottom: 50px;
+}
+
+.past-events-container, .upcoming-events-container {
+    padding-bottom: 50px;
+}
+
+.sidebar-event-heading::before {
+    content: "";
+    display: block;
+    width: 50%;
+    border-top: 1px solid rgb(155, 155, 155);
+    margin-bottom: 50px;
+}
+
+.sidebar-event-heading {
+    margin-top: 50px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: normal; 
+    font-size: 20px;
+    letter-spacing: .01em;
+}
+
+.event {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.event img {
+    width: 200px;
+}
+
+.event-text-container {
+    padding-top: 20px;
+}
+
+.sidebar-event-title {
+    font-family: 'Barlow', sans-serif;
+    font-weight: bold; 
+    font-size: 15px;
+    letter-spacing: .01em;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+.sidebar-event-date {
+    font-family: 'Barlow', sans-serif;
+    font-weight: normal; 
+    font-size: 13px;
+    letter-spacing: .01em;
+    color: rgb(155, 155, 155);
 }
 
 .hidden {
@@ -529,6 +620,21 @@ form {
 
 /* Tablet */
 @media screen and (min-width: 768px) and (max-width: 1199px) {
+
+    #intro-container {
+        width: 475px;
+    }
+
+    #intro-container h1 {
+        font-size: 68px;
+        line-height: 81px;
+    }
+
+    #intro-container p {
+        font-size: 20px;
+        line-height: 32px;
+    }
+
     .mobile-map-tall {
         height: 70vh !important;
         max-height: 70vh !important;
@@ -612,6 +718,20 @@ form {
         height: 100vh;
     }
 
+    #intro-container {
+        width: 475px;
+    }
+
+    #intro-container h1 {
+        font-size: 68px;
+        line-height: 81px;
+    }
+
+    #intro-container p {
+        font-size: 20px;
+        line-height: 32px;
+    }
+
     nav {
         width: 100%;
         transition: all 0.3s;
@@ -635,6 +755,10 @@ form {
     .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-group {
         margin-bottom: 10px;
         margin-right: 10px;
+    }
+
+    .js-open-sidebar-button {
+        display: none;
     }
 
     #map { 
@@ -707,9 +831,9 @@ form {
         right: 0;
         overflow-x: hidden;
         overflow-y: scroll;
-        /* padding: 30px; */
         transition: all 0.3s;
         box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.02);
+        border-left: 1px solid #e5e5e5;
     }
 
     .desktop-expanded {
@@ -729,9 +853,8 @@ form {
         right: 0;
         height: 100%;
         max-height: 100%;
-        z-index: 4;
         box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.08);
-        transition: all 0.3s;
+        padding: 40px;
     }
 
     .sidebar-open {
@@ -739,5 +862,18 @@ form {
         opacity: 1 !important;
         visibility: visible !important;
         transition: all 0.5s;
+    }
+
+    .event {
+        flex-direction: row;
+    }
+
+    .event img {
+        width: 125px;
+    }
+    
+    .event-text-container {
+        padding-left: 20px;
+        padding-top: 0px;
     }
 }

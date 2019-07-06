@@ -20,7 +20,7 @@
                 <button role="button" type="button" aria-label="Explore map" class="js-about-button">Explore the map</button>
             </div>
         </header>
-        <main class="hidden">
+        <main class="hidden" role="main">
             <nav id="nav" class="nav-expanded">
                 <button role="button" type="button" class="js-about-button"><img src="images/logo.png" class="logo" width="65px" alt="SOMA PILIPINAS"/></button>
                 <button role="button" type="button" class="open-list desktop-hidden fade-out" aria-label="Open list"><img src="images/list.svg" alt="Open list"/></button>
@@ -36,14 +36,14 @@
                             
                             <div id="filter-wrapper">
                                 <div class="radio-container">
-                                    <label for="all" id="filter-all">
+                                    <label for="all" id="filter-all" tabindex="0">
                                         <input class="js-filter-button" type="radio" name="filter" id="all" value="All" checked>
                                         <span>All</span>
                                     </label>
                                 </div>
                                 <div class="radio-container">
-                                    <label for="business" id="filter-business">
-                                        <input class="js-filter-button" type="radio" name="filter" id="business" value="Business">
+                                    <label for="business" id="filter-business" tabindex="0">
+                                        <input class="js-filter-button" type="radio" name="filter" id="business" value="Business" >
                                         <span>Businesses</span>
                                     </label>
                                 </div>
@@ -69,8 +69,8 @@
                     </fieldset>        
                 </form>
             </section>
-            <section class="listings desktop-expanded"></section>
-            <div id="sidebar" ></div>
+            <section class="listings desktop-expanded" aria-live="polite"></section>
+            <section id="sidebar" aria-live="polite"></section>
         </main>
         <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="index.js"></script>
