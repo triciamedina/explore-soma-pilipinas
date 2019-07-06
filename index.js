@@ -101,7 +101,9 @@ function handleMapClick() {
 
 function addPopup(feature) {
     let popUps = $('.mapboxgl-popup');
-    if (popUps[0]) popUps[0].remove();
+    if (popUps[0]) {
+        popUps[0].remove();
+    }
 
     let popup = new mapboxgl.Popup({ 
         offset: [0, -6],
@@ -268,7 +270,9 @@ function handleFilterClick() {
 
         // If there are open popups, remove them
         let popUps = $('.mapboxgl-popup');
-        if (popUps[0]) popUps[0].remove();
+        if (popUps[0]) {
+            popUps[0].remove();
+        };
         
         // Check the current zoom level and center position of the map
         let center = map.getCenter();
@@ -503,8 +507,10 @@ function selectFromList() {
 
         // If there are open popups, remove them
         let popUps = $('.mapboxgl-popup');
-        if (popUps[0]) popUps[0].remove();
-        
+        if (popUps[0]) {
+            popUps[0].remove();
+        };
+
         closeListingsDrawer();
 
         // Resets zoom and map center based on listing selected
