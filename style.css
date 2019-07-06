@@ -302,26 +302,6 @@ form {
     transition: 0.1s all linear;
 }
 
-label#filter-business:hover, label#filter-business input:checked + span {
-    color: #008a87;
-    transition: 0.1s all linear;
-}
-
-label#filter-community-organization:hover, label#filter-community-organization input:checked + span {
-    color: #a760a9;
-    transition: 0.1s all linear;
-}
-
-label#filter-community-landmark:hover, label#filter-community-landmark input:checked + span {
-    color: #fa6800;
-    transition: 0.1s all linear;
-}
-
-label#filter-events:hover, label#filter-events input:checked + span {
-    color: #57c8ef;
-    transition: 0.1s all linear;
-}
-
 #map-filter input {
     position: absolute;
     top: 50%;
@@ -370,8 +350,8 @@ label#filter-events:hover, label#filter-events input:checked + span {
 }
 
 .radio-container label#filter-events input:checked + span::before {
-    background: #57c8ef;
-    border: 1px solid #57c8ef;
+    background: #3838F0;
+    border: 1px solid #3838F0;
 }
 
 .listings {

@@ -226,7 +226,7 @@ function getEvents(url, options) {
                 // Adds event info to past events container
                 $('.past-events-container').prepend(
                     `<div class="event">
-                        <a href = "${responseJson.events[i].url}" target = "_blank"><img src="${responseJson.events[i].logo.url}"/></a>
+                        <a href = "${responseJson.events[i].url}" target = "_blank" aria-label="Event information"><img src="${responseJson.events[i].logo.url}" alt=""/></a>
                         <div class="event-text-container">
                             <a href = "${responseJson.events[i].url}" target = "_blank"><h4 class="sidebar-event-title">${responseJson.events[i].name.text}</h4></a>
                             <p class="sidebar-event-date">${date}</p>
@@ -236,7 +236,7 @@ function getEvents(url, options) {
                 // Adds event info to upcoming events container
                 $('.upcoming-events-container').prepend(
                     `<div class="event">
-                        <a href = "${responseJson.events[i].url}" target = "_blank"><img src="${responseJson.events[i].logo.url}"/></a>
+                        <a href = "${responseJson.events[i].url}" target = "_blank" aria-label="Event information"><img src="${responseJson.events[i].logo.url}" alt=""/></a>
                         <div class="event-text-container">
                             <a href = "${responseJson.events[i].url}" target = "_blank"><h4 class="sidebar-event-title">${responseJson.events[i].name.text}</h4></a>
                             <p class="sidebar-event-date">${date}</p>
