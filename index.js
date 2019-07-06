@@ -127,8 +127,11 @@ function addPopup(feature) {
 function openSideBar(feature) {
     // In mobile wait for button click to display sidebar
     if ($(window).width() < 1200) {
-        $(".js-open-sidebar-button").click(function() {
+        $('.js-open-sidebar-button').click(function() {
            displaySidebarDetails(feature);
+           $('#map').addClass('hidden');
+           $('#map-filter').addClass('hidden');
+           $('.listings').addClass('hidden');
         });
     // In desktop open sidebar automatically
     } else {
@@ -146,6 +149,9 @@ function closeSideBar() {
             center: [-122.409, 37.780],
         });
     } else {
+        $('#map').removeClass('hidden');
+           $('#map-filter').removeClass('hidden');
+           $('.listings').removeClass('hidden');
         map.flyTo({
             zoom: 13.2,
             center: [-122.406, 37.780],
