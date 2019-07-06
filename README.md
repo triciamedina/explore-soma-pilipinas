@@ -5,6 +5,8 @@ An interactive map of the SOMA Pilipinas cultural district of San Francisco. Use
 The current SOMA Pilipinas map is a static PDF. I was inspired to create an interactive version of the map to better represent the neighborhood as a dynamic and living cultural district with ongoing new generations of families and businessowners.
 
 ## Screenshots
+Landing page:
+![Landing page](https://user-images.githubusercontent.com/48637126/60761773-ded00980-a004-11e9-8809-38c3ec363a6c.png)
 
 ## Demo
 https://triciamedina.github.io/explore-soma-pilipinas/
