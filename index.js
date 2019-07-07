@@ -40,7 +40,6 @@ function renderMap() {
     });
 }
 
-
 function handleMapHover() {
     // Creates popup instance without adding to the map
     let popup = new mapboxgl.Popup({
@@ -74,7 +73,6 @@ function handleMapHover() {
         map.getCanvas().style.cursor = '';
         popup.remove();
     });
-
 }
 
 function handleMapClick() {
@@ -273,7 +271,7 @@ function handleFilterClick() {
         if (popUps[0]) {
             popUps[0].remove();
         };
-        
+
         // Check the current zoom level and center position of the map
         let center = map.getCenter();
         let newLng = center.lng.toFixed(3);
