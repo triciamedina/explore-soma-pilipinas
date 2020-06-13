@@ -6,13 +6,13 @@ The current SOMA Pilipinas map is a static PDF. I was inspired to create an inte
 
 ## Screenshots
 Landing page:
-![Landing page](https://user-images.githubusercontent.com/48637126/60761773-ded00980-a004-11e9-8809-38c3ec363a6c.png)
+![Landing page](https://user-images.githubusercontent.com/48637126/84556253-15fb7000-acd6-11ea-893d-164d22af1567.png)
 
 Map:
-![Map](https://user-images.githubusercontent.com/48637126/60761779-f7402400-a004-11e9-8f6c-1a4d37efcf6d.png)
+![Map](https://user-images.githubusercontent.com/48637126/84556258-23b0f580-acd6-11ea-87c6-5a4d5439036f.png)
 
 Map with sidebar:
-![Map with sidebar](https://user-images.githubusercontent.com/48637126/60761785-1b036a00-a005-11e9-9ca9-9977ad4f745c.png)
+![Map with sidebar](https://user-images.githubusercontent.com/48637126/84556264-33303e80-acd6-11ea-8746-18f44adbe681.png)
 
 ## Demo
 https://triciamedina.github.io/explore-soma-pilipinas/
